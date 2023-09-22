@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class MapGenerator : MonoBehaviour
 
     public float magnification = 7.0f; // 4 ~ 20
 
-    int xOffset = 0; // <- +>
-    int yOffset = 0;
+    float xOffset = 0f; // <- +>
+    float yOffset = 0f;
 
     // test slider
     public Slider sliderMag;
@@ -72,15 +73,16 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private TileController tileController;
+    private TileManager tileManager;
+    private CameraManager cameraManager;
 
     private void Awake()
     {
         gridWidth = 100;
         gridHeight = 100;
 
-        tileController = gameObject.GetComponent<TileController>();
-
+        tileManager = gameObject.GetComponent<TileManager>();
+        cameraManager = FindObjectOfType<CameraManager>();
     }
 
     private void Start()
@@ -92,12 +94,11 @@ public class MapGenerator : MonoBehaviour
     {
         noiseGrid = new List<List<int>>();
         gridList = new List<List<GridXY<GridObject>>>();
-        tileController.ResetTileMap();
+        tileManager.ResetTileMap();
 
-        //test
         magnification = sliderMag.value;
-        xOffset = (int)sliderXOffset.value;
-        yOffset = (int)sliderYOffset.value;
+        xOffset = Random.Range(0f, 99999f);
+        yOffset = Random.Range(0f, 99999f);
 
         for (int x = 0; x < gridWidth; x++)
         {
@@ -108,10 +109,12 @@ public class MapGenerator : MonoBehaviour
                 int tileId = GetIdUsingPerlin(x, y);
 
                 noiseGrid[x].Add(tileId);
-                //CreateTile(tileId, x, y);
-                tileController.DrawTile(x, y, tileId);
+                tileManager.DrawTile(x, y, tileId);
             }
         }
+
+        tileManager.SetPolygonCollider(gridWidth / 2, gridHeight / 2);
+        cameraManager.SetCameraPosition(gridWidth / 4, gridHeight / 4);
     }
 
     int GetIdUsingPerlin(int x, int y)
@@ -122,7 +125,7 @@ public class MapGenerator : MonoBehaviour
         );
 
         float clampPerlin = Mathf.Clamp(rawPerlin, 0.0f, 1.0f);
-        float scalePerlin = clampPerlin * tileController.GetTileBaseCount();
+        float scalePerlin = clampPerlin * tileManager.GetTileBaseCount();
 
         if (scalePerlin >= 9) scalePerlin = 9;
 
