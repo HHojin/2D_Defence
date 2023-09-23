@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = FindObjectOfType<GameManager>();
             }
@@ -19,10 +20,9 @@ public class GameManager : MonoBehaviour
 
     private static GameManager instance;
 
-
     private void Awake()
     {
-        if(instance != this)
+        if (Instance != this)
         {
             Destroy(gameObject);
         }
@@ -30,5 +30,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    [HideInInspector]
+    public UnityEvent<float, float> mapGenerated;
 
+    // MapGenerator.cs -> GenerateMap()
+    public void MapGenerated(float x, float y)
+    {
+        mapGenerated.Invoke(x, y);
+    }
 }

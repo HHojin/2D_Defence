@@ -13,6 +13,8 @@ public class TileManager : MonoBehaviour
     private void Start()
     {
         polygonCollider2D = GetComponentInChildren<PolygonCollider2D>();
+
+        GameManager.Instance.mapGenerated.AddListener(SetPolygonCollider);
     }
 
     public int GetTileBaseCount() { return tileBase.Length; }
@@ -24,7 +26,7 @@ public class TileManager : MonoBehaviour
         tileMap.SetTile(new Vector3Int(x, y, 0), tileBase[num]);
     }
 
-    public void SetPolygonCollider(int x, int y)
+    private void SetPolygonCollider(float x, float y)
     {
         polygonCollider2D.points = new[] {new Vector2(x + 5, y + 5), new Vector2(x + 5, -5),
                                         new Vector2(-5, -5), new Vector2(-5, y + 5) };

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MouseController : MonoBehaviour
 {
-    [Header ("Sreen Controll")]
+    [Header("Sreen Controll")]
     [SerializeField] private float panSpeed = 15f;
     [SerializeField] private float zoomScale = 2.5f;
 
@@ -15,6 +15,7 @@ public class MouseController : MonoBehaviour
 
     private CinemachineInputProvider inputProvider;
     private CinemachineVirtualCamera virtualCamera;
+    private CinemachineConfiner2D confiner;
     private Transform cameraTransform;
 
     private void Awake()
@@ -23,7 +24,13 @@ public class MouseController : MonoBehaviour
 
         inputProvider = GetComponent<CinemachineInputProvider>();
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
+        confiner = GetComponent<CinemachineConfiner2D>();
         cameraTransform = virtualCamera.VirtualCameraGameObject.transform;
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.mapGenerated.AddListener(SetCameraPos);
     }
 
     private void Update()
@@ -40,6 +47,12 @@ public class MouseController : MonoBehaviour
         {
             ZoomScreen(z);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (virtualCamera.transform.position != virtualCamera.State.CorrectedPosition)
+            virtualCamera.transform.position = virtualCamera.State.CorrectedPosition;
     }
 
     public Vector2 PanDirection(float x, float y)
@@ -65,7 +78,7 @@ public class MouseController : MonoBehaviour
         return direction;
     }
 
-    public void PanScreen(float x, float y)
+    private void PanScreen(float x, float y)
     {
         Vector2 direction = PanDirection(x, y);
         cameraTransform.position = Vector3.Lerp(cameraTransform.position,
@@ -73,11 +86,18 @@ public class MouseController : MonoBehaviour
                                                 Time.deltaTime);
     }
 
-    public void ZoomScreen(float increment)
+    private void ZoomScreen(float increment)
     {
         float fov = virtualCamera.m_Lens.OrthographicSize;
         float target = (increment > 0) ? fov + zoomScale : fov - zoomScale;
 
         virtualCamera.m_Lens.OrthographicSize = Mathf.Clamp(target, zoomInMax, zoomOutMax);
+    }
+
+    private void SetCameraPos(float x, float y)
+    {
+        virtualCamera.gameObject.transform.position = new Vector3(x / 2, y / 2, -10f);
+
+        confiner.InvalidateCache();
     }
 }

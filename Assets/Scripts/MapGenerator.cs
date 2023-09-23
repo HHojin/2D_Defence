@@ -86,11 +86,6 @@ public class MapGenerator : MonoBehaviour
         tileManager = gameObject.GetComponent<TileManager>();
     }
 
-    private void Start()
-    {
-        //GenerateMap();
-    }
-
     public void GenerateMap()
     {
         noiseGrid = new List<List<int>>();
@@ -114,9 +109,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        mapGenerated.Invoke(gridWidth / 2, gridHeight / 2);
-
-        tileManager.SetPolygonCollider(gridWidth / 2, gridHeight / 2);
+        GameManager.Instance.MapGenerated(gridWidth / 2, gridHeight / 2);
     }
 
     int GetIdUsingPerlin(int x, int y)

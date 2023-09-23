@@ -802,7 +802,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.104177475, y: 4.4335995, z: -10}
+  m_LocalPosition: {x: 25, y: 25, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1749,6 +1749,7 @@ MonoBehaviour:
   zoomScale: 2.5
   zoomInMax: 10
   zoomOutMax: 20
+  mainCamera: {fileID: 519420031}
 --- !u!114 &1137929249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1779,7 +1780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BoundingShape2D: {fileID: 1565547501}
   m_Damping: 0
-  m_MaxWindowSize: 0
+  m_MaxWindowSize: -1
 --- !u!1 &1284188954
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,6 +2634,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dde39edb44656e43b9056facfa2f37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapGenerated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1925259215
 Transform:
   m_ObjectHideFlags: 0
