@@ -7,8 +7,8 @@ public class TileManager : MonoBehaviour
 {
     public Tilemap tileMap;
     public TileBase[] tileBase = new TileBase[9];
-    [SerializeField]
-    PolygonCollider2D polygonCollider2D;
+
+    [SerializeField] PolygonCollider2D polygonCollider2D;
 
     private void Start()
     {

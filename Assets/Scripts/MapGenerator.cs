@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour
@@ -19,6 +20,8 @@ public class MapGenerator : MonoBehaviour
 
     float xOffset = 0f; // <- +>
     float yOffset = 0f;
+
+    public UnityEvent<float, float> mapGenerated;
 
     // test slider
     public Slider sliderMag;
@@ -74,7 +77,6 @@ public class MapGenerator : MonoBehaviour
     }
 
     private TileManager tileManager;
-    private CameraManager cameraManager;
 
     private void Awake()
     {
@@ -82,7 +84,6 @@ public class MapGenerator : MonoBehaviour
         gridHeight = 100;
 
         tileManager = gameObject.GetComponent<TileManager>();
-        cameraManager = FindObjectOfType<CameraManager>();
     }
 
     private void Start()
@@ -113,8 +114,9 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+        mapGenerated.Invoke(gridWidth / 2, gridHeight / 2);
+
         tileManager.SetPolygonCollider(gridWidth / 2, gridHeight / 2);
-        cameraManager.SetCameraPosition(gridWidth / 4, gridHeight / 4);
     }
 
     int GetIdUsingPerlin(int x, int y)
