@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridXY<GridObject>
+//public class GridXY<GridObject>
+public class GridXY
 {
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
 
@@ -15,20 +16,23 @@ public class GridXY<GridObject>
 
     public int width;
     public int height;
-    private float cellSize;
-    private GameObject tile;
+    private float cellSize = 1f;
+    //private GameObject tile;
     private Vector3 originPosition;
-    private GridObject[,] gridArray;
+    //private GridObject[,] gridArray;
+    private int[,] gridArray;
 
     //public GridXY(int width, int height, float cellSize, Vector3 originPosition, Func<GridXY<GridObject>, int, int, GridObject> createGridObject)
-    public GridXY(int width, int height, float cellSize, GameObject tile)
+    //public GridXY(int width, int height, float cellSize, GameObject tile)
+    public GridXY(int width, int height, float cellSize)
     {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
-        this.tile = tile;
+        //this.tile = tile;
 
-        gridArray = new GridObject[width, height];
+        //gridArray = new GridObject[width, height];
+        gridArray = new int[width, height];
 
         for(int x = 0; x < gridArray.GetLength(0); x++)
         {
@@ -53,6 +57,16 @@ public class GridXY<GridObject>
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
     }
+    public void SetGridArray(int x, int y, int value)
+    {
+        if (x >= 0 && y >= 0 && x < width && y < height)
+        {
+            gridArray[x, y] = value;
+        }
+    }
+
+    public int GetGridArray(int x, int y) { return gridArray[x, y]; }
+    /*
     public void SetGridObject(int x, int y, GridObject value)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
@@ -114,4 +128,5 @@ public class GridXY<GridObject>
             return false;
         }
     }
+    */
 }

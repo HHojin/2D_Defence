@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,12 +10,23 @@ public class TileManager : MonoBehaviour
     public TileBase[] tileBase = new TileBase[9];
 
     [SerializeField] PolygonCollider2D polygonCollider2D;
+    private MapGenerator mapGenerator;
+
+    private void Awake()
+    {
+        mapGenerator = gameObject.GetComponent<MapGenerator>();
+    }
 
     private void Start()
     {
         polygonCollider2D = GetComponentInChildren<PolygonCollider2D>();
 
         GameManager.Instance.mapGenerated.AddListener(SetPolygonCollider);
+    }
+
+    private void Update()
+    {
+        GridHeight();
     }
 
     public int GetTileBaseCount() { return tileBase.Length; }
@@ -31,5 +43,23 @@ public class TileManager : MonoBehaviour
         polygonCollider2D.points = new[] {new Vector2(x + 5, y + 5), new Vector2(x + 5, -5),
                                         new Vector2(-5, -5), new Vector2(-5, y + 5) };
         polygonCollider2D.SetPath(0, polygonCollider2D.points);
+    }
+
+    //tmp
+    public TMP_Text terrainHeight;
+
+    private void GridHeight()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (mouseWorldPos.x >= 0 && mouseWorldPos.y >= 0
+                && mouseWorldPos.x <= tileMap.size.x && mouseWorldPos.y <= tileMap.size.y)
+            {
+                var tmp = tileMap.WorldToCell(mouseWorldPos);
+                terrainHeight.text = "[" + tmp.x + "," + tmp.y + "]"
+                                    + mapGenerator.grid.GetGridArray(tmp.x, tmp.y);
+            }
+        }
     }
 }

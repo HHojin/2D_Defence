@@ -6,12 +6,12 @@ using UnityEngine;
 public class MouseController : MonoBehaviour
 {
     [Header("Sreen Controll")]
-    [SerializeField] private float panSpeed = 15f;
+    [SerializeField] private float panSpeed = 30f;
     [SerializeField] private float zoomScale = 2.5f;
 
     [Space(10f)]
-    [SerializeField] private float zoomInMax = 10f;
-    [SerializeField] private float zoomOutMax = 20f;
+    [SerializeField] private float zoomInMax = 20f;
+    [SerializeField] private float zoomOutMax = 52f;
 
     private CinemachineInputProvider inputProvider;
     private CinemachineVirtualCamera virtualCamera;
