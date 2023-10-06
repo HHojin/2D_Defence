@@ -64,6 +64,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+        grid.UpdateNeighbors();
         GameManager.Instance.MapGenerated(gridWidth, gridHeight);
     }
 

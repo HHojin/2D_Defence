@@ -44,11 +44,42 @@ public class WaterSimulation : MonoBehaviour
     {
         float flow = 0f;
 
-        for(int x = 0; x < cells.GetLength(0); x++)
+        for (int x = 0; x < cells.GetLength(0); x++)
         {
-            for(int y = 0;  y < cells.GetLength(1); y++)
+            for (int y = 0; y < cells.GetLength(1); y++)
             {
                 diffs[x, y] = 0f;
+            }
+        }
+
+        for (int x = 0; x < cells.GetLength(0); x++)
+        {
+            for (int y = 0; y < cells.GetLength(1); y++)
+            {
+                Cell cell = cells[x, y];
+                cell.ResetFlowDirection();
+
+                if (cell.liquid == 0) continue;
+                if (cell.settled) continue;
+                if (cell.liquid < MinValue) continue;
+
+                float startValue = cell.liquid;
+                float remainValue = cell.liquid;
+                flow = 0f;
+
+                if (cell.up != null && cell.up.liquid < startValue)
+                {
+                    float value = CalculateVerticalFlowValue(remainValue, cell.up);
+                    flow = value - cell.up.liquid;
+                    if (flow > 0)
+                    {
+                        cell.up.flowDirections[(int)FlowDirection.Down] = true;
+                        cell.flowDirections[(int)FlowDirection.Up] = true;
+                        remainValue -= flow;
+                        diffs[x, y] -= flow;
+                        diffs[x, y + 1] += flow;
+                    }
+                }
             }
         }
     }

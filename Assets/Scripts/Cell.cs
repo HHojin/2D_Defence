@@ -1,5 +1,10 @@
 using UnityEngine;
 
+public enum CellType
+{
+    Blank,
+    Wall
+}
 public enum FlowDirection
 {
     Up = 0,
@@ -8,11 +13,8 @@ public enum FlowDirection
     Left = 3,
 }
 
-public class Cell: MonoBehaviour
+public class Cell : MonoBehaviour
 {
-    // 0 = Empty // 1 = Full
-    public int cellType;
-
     public int xGrid { get; private set; }
     public int yGrid { get; private set; }
 
@@ -21,8 +23,10 @@ public class Cell: MonoBehaviour
     public bool settled;
     public int settleCount;
 
+    public CellType type { get; private set; }
+
     // Neighboring Cell
-    public Cell top { get; set; }
+    public Cell up { get; set; }
     public Cell right { get; set; }
     public Cell down { get; set; }
     public Cell left { get; set; }
@@ -41,5 +45,13 @@ public class Cell: MonoBehaviour
         flowDirections[1] = false;
         flowDirections[2] = false;
         flowDirections[3] = false;
+    }
+
+    public void UnsettledNeigthbors()
+    {
+        if (up != null) up.settled = false;
+        if (right != null) right.settled = false;
+        if (down != null) down.settled = false;
+        if (left != null) left.settled = false;
     }
 }

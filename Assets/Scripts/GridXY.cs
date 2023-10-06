@@ -17,10 +17,10 @@ public class GridXY
     public int width;
     public int height;
     private float cellSize = 1f;
-    //private GameObject tile;
     private Vector3 originPosition;
     //private GridObject[,] gridArray;
-    private int[,] gridArray;
+    private int[,] gridArray; // Terrain Height
+    private Cell[,] cells; // water simulation
 
     //public GridXY(int width, int height, float cellSize, Vector3 originPosition, Func<GridXY<GridObject>, int, int, GridObject> createGridObject)
     //public GridXY(int width, int height, float cellSize, GameObject tile)
@@ -29,10 +29,10 @@ public class GridXY
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
-        //this.tile = tile;
 
         //gridArray = new GridObject[width, height];
         gridArray = new int[width, height];
+        cells = new Cell[width, height];
 
         for(int x = 0; x < gridArray.GetLength(0); x++)
         {
@@ -66,6 +66,20 @@ public class GridXY
     }
 
     public int GetGridArray(int x, int y) { return gridArray[x, y]; }
+
+    public void UpdateNeighbors()
+    {
+        for(int x = 0; x < width; x++)
+        {
+            for(int y = 0; y < height; y++)
+            {
+                if(x > 0) cells[x, y].left = cells[x - 1, y];
+                if(x < width - 1) cells[x, y].right = cells[x + 1, y];
+                if(y > 0) cells[x, y].down = cells[x, y - 1];
+                if(y < height - 1) cells[x, y].up = cells[x, y + 1];
+            }
+        }
+    }
     /*
     public void SetGridObject(int x, int y, GridObject value)
     {

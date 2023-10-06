@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent<float, float> mapGenerated;
 
     // MapGenerator.cs -> GenerateMap()
+    // -> TileManager.cs -> SetPolygonCollider()
     public void MapGenerated(float x, float y)
     {
         mapGenerated.Invoke(x, y);
