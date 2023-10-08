@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //public class GridXY<GridObject>
@@ -20,7 +18,7 @@ public class GridXY
     private Vector3 originPosition;
     //private GridObject[,] gridArray;
     private int[,] gridArray; // Terrain Height
-    private Cell[,] cells; // water simulation
+    private Cell[,] cells; // Water simulation
 
     //public GridXY(int width, int height, float cellSize, Vector3 originPosition, Func<GridXY<GridObject>, int, int, GridObject> createGridObject)
     //public GridXY(int width, int height, float cellSize, GameObject tile)
@@ -66,6 +64,11 @@ public class GridXY
     }
 
     public int GetGridArray(int x, int y) { return gridArray[x, y]; }
+
+    public void SetCellArray(int x, int y)
+    {
+        cells[x, y] = new Cell(x, y);
+    }
 
     public void UpdateNeighbors()
     {

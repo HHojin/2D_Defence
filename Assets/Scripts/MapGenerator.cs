@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -61,6 +58,8 @@ public class MapGenerator : MonoBehaviour
 
                 grid.SetGridArray(x, y, tileId);
                 tileManager.DrawTile(x, y, tileId);
+
+                grid.SetCellArray(x, y);
             }
         }
 

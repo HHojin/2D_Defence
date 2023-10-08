@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public enum CellType
 {
     Blank,
@@ -13,7 +11,7 @@ public enum FlowDirection
     Left = 3,
 }
 
-public class Cell : MonoBehaviour
+public class Cell
 {
     public int xGrid { get; private set; }
     public int yGrid { get; private set; }
@@ -32,6 +30,12 @@ public class Cell : MonoBehaviour
     public Cell left { get; set; }
 
     public bool[] flowDirections = new bool[4];
+
+    public Cell(int x, int y)
+    {
+        xGrid = x;
+        yGrid = y;
+    }
 
     public void AddWater(float amount)
     {
