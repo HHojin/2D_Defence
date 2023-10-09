@@ -82,5 +82,22 @@ public class WaterSimulation : MonoBehaviour
                 }
             }
         }
+
+
+
+
+        for(int x = 0; x < cells.GetLength(0); x++)
+        {
+            for(int y = 0; y < cells.GetLength(1); y++)
+            {
+                cells[x, y].liquid += diffs[x, y];
+
+                if (cells[x,y].liquid < MinValue)
+                {
+                    cells[x, y].liquid = 0;
+                    cells[x, y].settled = false; //default empty cell
+                }
+            }
+        }
     }
 }

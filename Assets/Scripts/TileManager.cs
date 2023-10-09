@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour
 {
+    //public Tilemap[] tileMap = new Tilemap[5];
     public Tilemap tileMap;
-    public TileBase[] tileBase = new TileBase[9];
+    public TileBase[] tileBase = new TileBase[5];
 
     [SerializeField] PolygonCollider2D polygonCollider2D;
     private MapGenerator mapGenerator;
@@ -29,13 +28,30 @@ public class TileManager : MonoBehaviour
         GridHeight();
     }
 
+    //public int GetTileMapCount() { return tileMap.Length; }
     public int GetTileBaseCount() { return tileBase.Length; }
 
-    public void ResetTileMap() { tileMap.ClearAllTiles(); }
+    public void ResetTileMap()
+    {
+        tileMap.ClearAllTiles();
+        /*
+        foreach (var tileMaps in tileMap)
+        {
+            tileMaps.ClearAllTiles();
+        }
+        */
+    }
 
     public void DrawTile(int x, int y, int num)
     {
         tileMap.SetTile(new Vector3Int(x, y, 0), tileBase[num]);
+
+        /*
+        for(int i = num; i >= 0; i--)
+        {
+            tileMap[i].SetTile(new Vector3Int(x, y, 0), tileBase[i]);
+        }
+        */
     }
 
     private void SetPolygonCollider(float x, float y)

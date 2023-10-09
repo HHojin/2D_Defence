@@ -75,10 +75,11 @@ public class MapGenerator : MonoBehaviour
         );
 
         float clampPerlin = Mathf.Clamp(rawPerlin, 0.0f, 1.0f);
-        //float scalePerlin = clampPerlin * tileManager.GetTileBaseCount();
-        float scalePerlin = clampPerlin * (tileManager.GetTileBaseCount()-5);
+        float scalePerlin = clampPerlin * tileManager.GetTileBaseCount();
+        //float scalePerlin = clampPerlin * (tileManager.GetTileBaseCount()-5);
+        //float scalePerlin = clampPerlin * tileManager.GetTileMapCount();
 
-        if (scalePerlin >= 5) scalePerlin = 5;
+        if (scalePerlin >= 4) scalePerlin = 4;
 
         return Mathf.FloorToInt(scalePerlin); // 0 ~ 9
     }
