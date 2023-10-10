@@ -1200,11 +1200,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMap: {fileID: 1374425002}
   tileBase:
-  - {fileID: 11400000, guid: e6ae7dab5e8f6ac4589d5e668a0cd4d6, type: 2}
-  - {fileID: 11400000, guid: 22c696ec9bc1fc04d9e631394da15a6a, type: 2}
-  - {fileID: 11400000, guid: e14a38a02f52ae749982c349e66e0e81, type: 2}
-  - {fileID: 11400000, guid: fda26e82b92b1c4489a8c7ad6bb06bf4, type: 2}
-  - {fileID: 11400000, guid: d9c7c122fbb2f9b41be0d6fa28dde696, type: 2}
+  - {fileID: 11400000, guid: d836ead1355426b4dad95667fefdcfbf, type: 2}
+  - {fileID: 11400000, guid: 3a3590e0bff8ff246811e2c43437053c, type: 2}
+  - {fileID: 11400000, guid: 9cfc680484cd0844f90f9386cb1277da, type: 2}
+  - {fileID: 11400000, guid: d483108cc05ff68438065a5c2e82ad7f, type: 2}
+  - {fileID: 11400000, guid: 40b419da10737664b8307005239893b7, type: 2}
   polygonCollider2D: {fileID: 1374425000}
   terrainHeight: {fileID: 416153454}
 --- !u!156049354 &602811168
