@@ -1,80 +1,91 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TileManager : MonoBehaviour
+public class TileManager : Singleton<TileManager>
 {
-    //public Tilemap[] tileMap = new Tilemap[5];
-    public Tilemap tileMap;
-    public TileBase[] tileBase = new TileBase[5];
+    public GridXY grid;
 
-    [SerializeField] PolygonCollider2D polygonCollider2D;
-    private MapGenerator mapGenerator;
+    /*
+     * 0 : map
+     * 1 : water
+     */
 
-    private void Awake()
+    [Header("Map")]
+    public Tilemap map;
+    public TileBase[] mapTileBase = new TileBase[5];
+
+    [Header("Water")]
+    public Tilemap[] water = new Tilemap[5];
+    public TileBase waterTileBase;
+
+    [Header("Grid Info")]
+    [SerializeField] private int gridWidth = 100;
+    [SerializeField] private int gridHeight = 100;
+    [SerializeField] private float cellSize = 1f;
+    [SerializeField] private int cellHeight = 5;
+
+    protected override void Awake()
     {
-        mapGenerator = gameObject.GetComponent<MapGenerator>();
+        grid = new GridXY(gridWidth, gridHeight, cellSize, cellHeight);
     }
 
-    private void Start()
+    public int GetTileBaseCount(int type)
     {
-        polygonCollider2D = GetComponentInChildren<PolygonCollider2D>();
-
-        GameManager.Instance.mapGenerated.AddListener(SetPolygonCollider);
-    }
-
-    private void Update()
-    {
-        GridHeight();
-    }
-
-    //public int GetTileMapCount() { return tileMap.Length; }
-    public int GetTileBaseCount() { return tileBase.Length; }
-
-    public void ResetTileMap()
-    {
-        tileMap.ClearAllTiles();
-        /*
-        foreach (var tileMaps in tileMap)
+        switch (type)
         {
-            tileMaps.ClearAllTiles();
+            case 0:
+                return mapTileBase.Count();
+            case 1:
+                return 1;
         }
-        */
+
+        return 0;
     }
 
-    public void DrawTile(int x, int y, int num)
+    public void ResetTileMap(int type)
     {
-        tileMap.SetTile(new Vector3Int(x, y, 0), tileBase[num]);
-
-        /*
-        for(int i = num; i >= 0; i--)
+        switch (type)
         {
-            tileMap[i].SetTile(new Vector3Int(x, y, 0), tileBase[i]);
+            case 0:
+                map.ClearAllTiles();
+                break;
+            case 1:
+                foreach(var tilemap in water)
+                    tilemap.ClearAllTiles();
+
+                break;
         }
-        */
     }
 
-    private void SetPolygonCollider(float x, float y)
+    public void DrawTile(int x, int y, int type, int tileBaseIdx)
     {
-        polygonCollider2D.points = new[] {new Vector2(x + 5, y + 5), new Vector2(x + 5, -5),
-                                        new Vector2(-5, -5), new Vector2(-5, y + 5) };
-        polygonCollider2D.SetPath(0, polygonCollider2D.points);
+        switch (type)
+        {
+            case 0:
+                map.SetTile(new Vector3Int(x, y, 0), mapTileBase[tileBaseIdx]);
+                break;
+            case 1:
+                water[tileBaseIdx].SetTile(new Vector3Int(x, y, 0), waterTileBase);
+                break;
+        }
     }
 
     //tmp
     public TMP_Text terrainHeight;
 
-    private void GridHeight()
+    public void GridHeight()
     {
         if (Input.GetMouseButtonDown(0))
         {
             var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (mouseWorldPos.x >= 0 && mouseWorldPos.y >= 0
-                && mouseWorldPos.x <= tileMap.size.x && mouseWorldPos.y <= tileMap.size.y)
+                && mouseWorldPos.x <= map.size.x && mouseWorldPos.y <= map.size.y)
             {
-                var tmp = tileMap.WorldToCell(mouseWorldPos);
+                var tmp = map.WorldToCell(mouseWorldPos);
                 terrainHeight.text = "[" + tmp.x + "," + tmp.y + "]"
-                                    + mapGenerator.grid.GetGridArray(tmp.x, tmp.y);
+                                    + grid.GetGridArray(tmp.x, tmp.y);
             }
         }
     }

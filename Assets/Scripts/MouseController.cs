@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
@@ -26,11 +24,6 @@ public class MouseController : MonoBehaviour
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         confiner = GetComponent<CinemachineConfiner2D>();
         cameraTransform = virtualCamera.VirtualCameraGameObject.transform;
-    }
-
-    private void Start()
-    {
-        GameManager.Instance.mapGenerated.AddListener(SetCameraPos);
     }
 
     private void Update()
@@ -92,6 +85,8 @@ public class MouseController : MonoBehaviour
         float target = (increment > 0) ? fov + zoomScale : fov - zoomScale;
 
         virtualCamera.m_Lens.OrthographicSize = Mathf.Clamp(target, zoomInMax, zoomOutMax);
+        
+        confiner.InvalidateCache();
     }
 
     private void SetCameraPos(float x, float y)

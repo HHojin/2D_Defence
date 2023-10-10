@@ -44,6 +44,9 @@ TagManager:
   - name: MapHeight
     uniqueID: 1201094571
     locked: 0
+  - name: WaterHeight
+    uniqueID: 3027338189
+    locked: 0
   - name: UI
     uniqueID: 2941565521
     locked: 0

@@ -1,7 +1,10 @@
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
 public enum CellType
 {
     Blank,
-    Wall
+    Solid
 }
 public enum FlowDirection
 {
@@ -9,37 +12,46 @@ public enum FlowDirection
     Right = 1,
     Down = 2,
     Left = 3,
+    Top = 4,
+    Bottom = 5
 }
 
 public class Cell
 {
-    public int xGrid { get; private set; }
-    public int yGrid { get; private set; }
+    public int X { get; private set; }
+    public int Y { get; private set; }
+    public int Z { get; private set; }
 
-    public float liquid { get; set; }
+    public float Liquid { get; set; }
 
     public bool settled;
     public int settleCount;
 
-    public CellType type { get; private set; }
+    public CellType Type { get; set; }
 
     // Neighboring Cell
-    public Cell up { get; set; }
-    public Cell right { get; set; }
-    public Cell down { get; set; }
-    public Cell left { get; set; }
+    public Cell Up { get; set; }
+    public Cell Right { get; set; }
+    public Cell Down { get; set; }
+    public Cell Left { get; set; }
+    public Cell Top { get; set; }
+    public Cell Bottom { get; set; }
 
-    public bool[] flowDirections = new bool[4];
+    public bool[] flowDirections = new bool[6];
 
-    public Cell(int x, int y)
+    public Tilemap tilemap;
+    public TileBase tilebase;
+
+    public Cell(int x, int y, int z)
     {
-        xGrid = x;
-        yGrid = y;
+        X = x;
+        Y = y;
+        Z = z;
     }
 
     public void AddWater(float amount)
     {
-        liquid += amount;
+        Liquid += amount;
         settled = false;
     }
 
@@ -49,13 +61,17 @@ public class Cell
         flowDirections[1] = false;
         flowDirections[2] = false;
         flowDirections[3] = false;
+        flowDirections[4] = false;
+        flowDirections[5] = false;
     }
 
-    public void UnsettledNeigthbors()
+    public void UnsettledNeighbors()
     {
-        if (up != null) up.settled = false;
-        if (right != null) right.settled = false;
-        if (down != null) down.settled = false;
-        if (left != null) left.settled = false;
+        if (Up != null) Up.settled = false;
+        if (Right != null) Right.settled = false;
+        if (Down != null) Down.settled = false;
+        if (Left != null) Left.settled = false;
+        if (Top != null) Top.settled = false;
+        if (Bottom != null) Bottom.settled = false;
     }
 }

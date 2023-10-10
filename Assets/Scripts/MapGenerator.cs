@@ -1,54 +1,37 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public class MapGenerator : MonoBehaviour
 {
+    public PolygonCollider2D polygonCollider2D;
 
-    [SerializeField] private int gridWidth = 100;
-    [SerializeField] private int gridHeight = 100;
-    [SerializeField] private float cellSize = 1f;
-
-    public GridXY grid;
+    private int gridWidth;
+    private int gridHeight;
+    private int cellHeight;
 
     public float magnification = 7.0f; // 4 ~ 20
 
     float xOffset = 0f; // <- +>
     float yOffset = 0f;
 
-    public UnityEvent<float, float> mapGenerated;
-
     // test slider
     public Slider sliderMag;
     public Slider sliderXOffset;
     public Slider sliderYOffset;
 
-    private TileManager tileManager;
-
-    private static MapGenerator instance;
-
-    public static MapGenerator Instance()
-    {
-        return instance;
-    }
-
-    private void Awake()
-    {
-        instance = this;
-
-        grid = new GridXY(gridWidth, gridHeight, cellSize);
-
-        tileManager = gameObject.GetComponent<TileManager>();
-    }
-
     public void GenerateMap()
     {
-        tileManager.ResetTileMap();
+        TileManager.Instance.ResetTileMap(0);
 
         magnification = sliderMag.value;
         xOffset = Random.Range(0f, 99999f);
         yOffset = Random.Range(0f, 99999f);
+
+        gridWidth = TileManager.Instance.grid.GetWidth();
+        gridHeight = TileManager.Instance.grid.GetHeight();
+        cellHeight = TileManager.Instance.grid.GetCellHeight();
 
         for (int x = 0; x < gridWidth; x++)
         {
@@ -56,15 +39,30 @@ public class MapGenerator : MonoBehaviour
             {
                 int tileId = GetIdUsingPerlin(x, y);
 
-                grid.SetGridArray(x, y, tileId);
-                tileManager.DrawTile(x, y, tileId);
+                for (int z = cellHeight - 1; z >= tileId; z--)
+                {
+                    TileManager.Instance.grid.SetCellArray(x, y, z, CellType.Blank);
+                }
 
-                grid.SetCellArray(x, y);
+                for (int z = tileId - 1; z >= 0; z--)
+                {
+                    TileManager.Instance.grid.SetCellArray(x, y, z, CellType.Solid);
+                }
+
+                TileManager.Instance.grid.SetGridArray(x, y, tileId);
+                TileManager.Instance.DrawTile(x, y, 0, tileId);
             }
         }
 
-        grid.UpdateNeighbors();
-        GameManager.Instance.MapGenerated(gridWidth, gridHeight);
+        SetPolygonCollider(gridWidth, gridHeight);
+        TileManager.Instance.grid.UpdateNeighbors();
+    }
+
+    public void SetPolygonCollider(float x, float y)
+    {
+        polygonCollider2D.points = new[] {new Vector2(x + 5, y + 5), new Vector2(x + 5, -5),
+                                        new Vector2(-5, -5), new Vector2(-5, y + 5) };
+        polygonCollider2D.SetPath(0, polygonCollider2D.points);
     }
 
     int GetIdUsingPerlin(int x, int y)
@@ -75,13 +73,21 @@ public class MapGenerator : MonoBehaviour
         );
 
         float clampPerlin = Mathf.Clamp(rawPerlin, 0.0f, 1.0f);
-        float scalePerlin = clampPerlin * tileManager.GetTileBaseCount();
+        float scalePerlin = clampPerlin * TileManager.Instance.mapTileBase.Count();
         //float scalePerlin = clampPerlin * (tileManager.GetTileBaseCount()-5);
         //float scalePerlin = clampPerlin * tileManager.GetTileMapCount();
 
         if (scalePerlin >= 4) scalePerlin = 4;
 
-        return Mathf.FloorToInt(scalePerlin); // 0 ~ 9
+        return Mathf.FloorToInt(scalePerlin); // 0 ~ 4
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            TileManager.Instance.GridHeight();
+        }
     }
 }
 
