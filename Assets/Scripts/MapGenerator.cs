@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using System;
 using System.Linq;
+using UnityEngine.Events;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -20,6 +22,8 @@ public class MapGenerator : MonoBehaviour
     public Slider sliderMag;
     public Slider sliderXOffset;
     public Slider sliderYOffset;
+
+    [HideInInspector] public UnityEvent<float, float> GeneratedMap;
 
     public void GenerateMap()
     {
@@ -56,6 +60,8 @@ public class MapGenerator : MonoBehaviour
 
         SetPolygonCollider(gridWidth, gridHeight);
         TileManager.Instance.grid.UpdateNeighbors();
+
+        GameManager.Instance.MapGenerated(gridWidth, gridHeight);
     }
 
     public void SetPolygonCollider(float x, float y)

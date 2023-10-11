@@ -1,6 +1,9 @@
 using Cinemachine;
 using UnityEngine;
 
+//tmp
+using UnityEngine.Events;
+
 public class MouseController : MonoBehaviour
 {
     [Header("Sreen Controll")]
@@ -16,6 +19,8 @@ public class MouseController : MonoBehaviour
     private CinemachineConfiner2D confiner;
     private Transform cameraTransform;
 
+    [HideInInspector] private UnityEvent<float, float> mapGenerated;
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -24,6 +29,11 @@ public class MouseController : MonoBehaviour
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         confiner = GetComponent<CinemachineConfiner2D>();
         cameraTransform = virtualCamera.VirtualCameraGameObject.transform;
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.mapGenerated.AddListener(SetCameraPos);
     }
 
     private void Update()

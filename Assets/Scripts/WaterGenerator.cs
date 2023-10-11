@@ -1,11 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class WaterGenerator : MonoBehaviour
 {
     private WaterSimulation waterSimulation;
-    public Tilemap[] map = new Tilemap[5];
 
     private void OnEnable()
     {
@@ -21,15 +20,27 @@ public class WaterGenerator : MonoBehaviour
         //TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(1f);
         waterSimulation.Simulate(ref TileManager.Instance.grid.GetCellArrayRef());
 
-        foreach (var cell in TileManager.Instance.grid.cellArray)
+        for(int x = 0; x < TileManager.Instance.grid.GetWidth(); x++)
         {
-            if (cell.Liquid > 0.005f)
+            for (int y = 0; y < TileManager.Instance.grid.GetHeight(); y++)
             {
-                map[cell.Z].SetTile(new Vector3Int(cell.X, cell.Y, 0), TileManager.Instance.waterTileBase);
-            }
-            else
-            {
-                map[cell.Z].SetTile(new Vector3Int(cell.X, cell.Y, 0), null);
+                double sum = 0;
+
+                for (int z = 0; z < TileManager.Instance.grid.GetCellHeight(); z++)
+                {
+                    sum += TileManager.Instance.grid.cellArray[x, y, z].Liquid;
+                }
+
+                int tmp = (int)Math.Truncate(sum);
+
+                if (tmp > 0.005f)
+                {
+                    TileManager.Instance.DrawTile(x, y, 1, tmp);
+                }
+                else
+                {
+                    TileManager.Instance.DrawTile(x, y, 1, -1);
+                }
             }
         }
     }
@@ -38,8 +49,8 @@ public class WaterGenerator : MonoBehaviour
     {
         while (true)
         {
-            TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(1f);
-            yield return new WaitForSeconds(0.1f);
+            TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(0.5f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 

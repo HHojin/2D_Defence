@@ -10,7 +10,7 @@ public class WaterSimulation
     private float MaxFlow = 4.0f;
     private float MinFlow = 0.005f;
 
-    private float flowSpeed = 1f;
+    private float flowSpeed = 0.5f;
 
     private float[,,] diffs;
 

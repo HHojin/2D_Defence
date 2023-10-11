@@ -17,8 +17,8 @@ public class TileManager : Singleton<TileManager>
     public TileBase[] mapTileBase = new TileBase[5];
 
     [Header("Water")]
-    public Tilemap[] water = new Tilemap[5];
-    public TileBase waterTileBase;
+    public Tilemap water;
+    public TileBase[] waterTileBase = new TileBase[5];
 
     [Header("Grid Info")]
     [SerializeField] private int gridWidth = 100;
@@ -52,9 +52,7 @@ public class TileManager : Singleton<TileManager>
                 map.ClearAllTiles();
                 break;
             case 1:
-                foreach(var tilemap in water)
-                    tilemap.ClearAllTiles();
-
+                water.ClearAllTiles();
                 break;
         }
     }
@@ -67,7 +65,8 @@ public class TileManager : Singleton<TileManager>
                 map.SetTile(new Vector3Int(x, y, 0), mapTileBase[tileBaseIdx]);
                 break;
             case 1:
-                water[tileBaseIdx].SetTile(new Vector3Int(x, y, 0), waterTileBase);
+                if(tileBaseIdx == -1) water.SetTile(new Vector3Int(x, y, 0), null);
+                else water.SetTile(new Vector3Int(x, y, 0), waterTileBase[tileBaseIdx]);
                 break;
         }
     }
