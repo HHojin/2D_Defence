@@ -31,6 +31,21 @@ public class TileManager : Singleton<TileManager>
         grid = new GridXY(gridWidth, gridHeight, cellSize, cellHeight);
     }
 
+    /*
+    public bool GetTile(int type, Vector3Int pos)
+    {
+        switch (type)
+        {
+            case 0:
+                return map.GetTile(pos) != null;
+            case 1:
+                return water.GetTile(pos) != null;
+        }
+
+        return false;
+    }
+    */
+
     public int GetTileBaseCount(int type)
     {
         switch (type)

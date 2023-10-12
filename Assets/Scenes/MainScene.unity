@@ -778,6 +778,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1137929244}
+        m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &285390851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1482,6 +1494,9 @@ MonoBehaviour:
   sliderMag: {fileID: 318564091}
   sliderXOffset: {fileID: 198381281}
   sliderYOffset: {fileID: 1319071}
+  GeneratedMap:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &602811171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3708,6 +3723,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1f9cb58e724f34fa4d3e579f77a554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapGenerated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1925259215
 Transform:
   m_ObjectHideFlags: 0

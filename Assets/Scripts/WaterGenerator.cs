@@ -1,47 +1,77 @@
-using System;
 using System.Collections;
 using UnityEngine;
+
+using UnityEngine.Events;
 
 public class WaterGenerator : MonoBehaviour
 {
     private WaterSimulation waterSimulation;
 
+    private int length;
+    private int width;
+    private int height;
+
+    [HideInInspector] private UnityEvent<float, float> mapGenerated;
+
     private void OnEnable()
     {
         waterSimulation = new WaterSimulation();
         waterSimulation.Init(TileManager.Instance.grid.GetCellArrayRef());
-        
+
+        length = TileManager.Instance.grid.GetWidth();
+        width = TileManager.Instance.grid.GetHeight();
+        height = TileManager.Instance.grid.GetCellHeight();
+
+        GameManager.Instance.mapGenerated.AddListener(StopCoroutine);
+
+        StartCoroutine(Simulation());
         StartCoroutine(AddWater());
+        StartCoroutine(DrawTile());
     }
 
-
-    private void Update()
+    public void StopCoroutine(float x, float y)
     {
-        //TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(1f);
-        waterSimulation.Simulate(ref TileManager.Instance.grid.GetCellArrayRef());
+        StopAllCoroutines();
 
-        for(int x = 0; x < TileManager.Instance.grid.GetWidth(); x++)
+        TileManager.Instance.ResetTileMap(1);
+
+        gameObject.GetComponent<WaterGenerator>().enabled = false;
+    }
+
+    IEnumerator Simulation()
+    {
+        while (true)
         {
-            for (int y = 0; y < TileManager.Instance.grid.GetHeight(); y++)
+            waterSimulation.Simulate(ref TileManager.Instance.grid.GetCellArrayRef());
+            yield return YieldInStructionCache.WaitForSeconds(2f);
+        }
+    }
+
+    IEnumerator DrawTile()
+    {
+        int waterHeight;
+        while (true)
+        {
+            for (int x = 0; x < length; x++)
             {
-                double sum = 0;
-
-                for (int z = 0; z < TileManager.Instance.grid.GetCellHeight(); z++)
+                for (int y = 0; y < width; y++)
                 {
-                    sum += TileManager.Instance.grid.cellArray[x, y, z].Liquid;
-                }
+                    waterHeight = -1;
 
-                int tmp = (int)Math.Truncate(sum);
+                    for (int z = height - 1; z >= 0; z--)
+                    {
+                        if (TileManager.Instance.grid.cellArray[x, y, z].Liquid > 0.05f)
+                        {
+                            waterHeight = z;
+                            break;
+                        }
+                    }
 
-                if (tmp > 0.005f)
-                {
-                    TileManager.Instance.DrawTile(x, y, 1, tmp);
-                }
-                else
-                {
-                    TileManager.Instance.DrawTile(x, y, 1, -1);
+                    TileManager.Instance.DrawTile(x, y, 1, waterHeight);
                 }
             }
+
+            yield return YieldInStructionCache.WaitForEndOfFrame;
         }
     }
 
@@ -50,49 +80,37 @@ public class WaterGenerator : MonoBehaviour
         while (true)
         {
             TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(0.5f);
-            yield return new WaitForSeconds(0.05f);
+            yield return YieldInStructionCache.WaitForSeconds(3f);
         }
     }
 
     /*
-    public void StopCoroutine()
+    private void Update()
     {
-        StopAllCoroutines();
+        //waterSimulation.Simulate(ref TileManager.Instance.grid.GetCellArrayRef());
+        //DrawTile();
     }
 
-
-    public void StartSimulation()
+    private void DrawTile()
     {
-        StartCoroutine(AddWater());
-        StartCoroutine(Simulation());
-        StartCoroutine(DrawWater());
-    }
+        int waterHeight;
 
-
-    IEnumerator Simulation()
-    {
-        while (true)
+        for (int x = 0; x < length; x++)
         {
-            waterSimulation.Simulate(ref TileManager.Instance.grid.cellArray);
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
-
-    IEnumerator DrawWater()
-    {
-        while (true)
-        {
-            foreach(var cell in TileManager.Instance.grid.cellArray)
+            for (int y = 0; y < width; y++)
             {
-                if (cell.Liquid > 0f)
+                waterHeight = -1;
+
+                for (int z = height - 1; z >= 0; z--)
                 {
-                    map.SetTile(new Vector3Int(cell.X, cell.Y, 0), TileManager.Instance.waterTileBase);
+                    if (TileManager.Instance.grid.cellArray[x, y, z].Liquid > 0.005f)
+                    {
+                        waterHeight = z;
+                        break;
+                    }
                 }
-                else
-                {
-                    map.SetTile(new Vector3Int(cell.X, cell.Y, 0), null);
-                }
+
+                TileManager.Instance.DrawTile(x, y, 1, waterHeight);
             }
         }
     }

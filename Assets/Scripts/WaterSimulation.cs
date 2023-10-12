@@ -10,7 +10,7 @@ public class WaterSimulation
     private float MaxFlow = 4.0f;
     private float MinFlow = 0.005f;
 
-    private float flowSpeed = 0.5f;
+    private float flowSpeed = 1f;
 
     private float[,,] diffs;
 
@@ -42,7 +42,7 @@ public class WaterSimulation
 
     public void Simulate(ref Cell[,,] cells)
     {
-        float flow = 0f;
+        float flow;
 
         for (int x = 0; x < cells.GetLength(0); x++)
         {
@@ -64,7 +64,11 @@ public class WaterSimulation
 
                     if (cell.Liquid == 0) continue;
                     if (cell.settled) continue;
-                    if (cell.Liquid < MinValue) continue;
+                    if (cell.Liquid < MinValue)
+                    {
+                        cell.Liquid = 0;
+                        continue;
+                    }
 
                     float startValue = cell.Liquid;
                     float remainValue = cell.Liquid;
@@ -73,7 +77,7 @@ public class WaterSimulation
                     //Flow to bottom cell
                     if (cell.Bottom != null && cell.Bottom.Type == CellType.Blank)
                     {
-                        float value = CalculateVerticalFlowValue(remainValue, cell.Bottom) - cell.Bottom.Liquid;
+                        flow = CalculateVerticalFlowValue(remainValue, cell.Bottom) - cell.Bottom.Liquid;
                         if (cell.Bottom.Liquid > 0 && flow > MinFlow)
                             flow *= flowSpeed;
 
@@ -165,7 +169,7 @@ public class WaterSimulation
                     if (cell.Down != null && cell.Down.Type == CellType.Blank)
                     {
                         // Calculate flow rate
-                        flow = (remainValue - cell.Down.Liquid) / 4f;
+                        flow = (remainValue - cell.Down.Liquid) / 5f;
                         if (flow > MinFlow)
                             flow *= flowSpeed;
 
@@ -196,7 +200,7 @@ public class WaterSimulation
                     if (cell.Left != null && cell.Left.Type == CellType.Blank)
                     {
                         // Calculate flow rate
-                        flow = (remainValue - cell.Left.Liquid) / 3f;
+                        flow = (remainValue - cell.Left.Liquid) / 5f;
                         if (flow > MinFlow)
                             flow *= flowSpeed;
 
@@ -280,13 +284,11 @@ public class WaterSimulation
                 {
                     cells[x, y, z].Liquid += diffs[x, y, z];
 
-                    /*
                     if (cells[x, y, z].Liquid < MinValue)
                     {
                         cells[x, y, z].Liquid = 0;
                         cells[x, y, z].settled = false; //default empty cell
                     }
-                    */
                 }
             }
         }
