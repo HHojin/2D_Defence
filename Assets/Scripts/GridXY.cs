@@ -52,7 +52,7 @@ public class GridXY
     public int GetHeight() => height;
     public float GetCellSize() => cellSize;
     public int GetCellHeight() => cellHeight;
-    public Vector3 GetWorldPosition(int x, int y) { return new Vector3(x, y, 0) * cellSize + originPosition; }
+    //public Vector3 GetWorldPosition(int x, int y) { return new Vector3(x, y, 0) * cellSize + originPosition; }
     public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
@@ -66,13 +66,23 @@ public class GridXY
         }
     }
 
-    public int GetGridArray(int x, int y) { return gridArray[x, y]; }
+    public int GetGridArray(int x, int y) => gridArray[x, y];
 
     public void SetCellArray(int x, int y, int z, CellType type)
     {
-        //Debug.Log(x + ", " + y + ", " + z + ": " + type);
         cellArray[x, y, z] = new Cell(x, y, z);
         cellArray[x, y, z].Type = type;
+    }
+
+    public int GetCellArray(int x, int y)
+    {
+        for (int z = cellHeight - 1; z >= 0; z--)
+        {
+            if (cellArray[x, y, z].Liquid >= 0.01f)
+                return z;
+        }
+
+        return 0;
     }
 
     public ref Cell[,,] GetCellArrayRef() => ref cellArray;
