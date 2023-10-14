@@ -5,12 +5,12 @@ public class WaterSimulation
     private float MaxValue = 1.0f;
     private float MinValue = 0.005f;
 
-    private float MaxCompression = 0.25f;
+    private float MaxCompression = 0.02f; //0.25f
 
-    private float MaxFlow = 4.0f;
+    private float MaxFlow = 3.0f; //4.0f
     private float MinFlow = 0.005f;
 
-    private float flowSpeed = 1f;
+    private float flowSpeed = 0.5f; //1f
 
     private float[,,] diffs;
 
@@ -53,11 +53,12 @@ public class WaterSimulation
             }
         }
 
-        for (int x = 0; x < cells.GetLength(0); x++)
+        //for (int z = 0; z < cells.GetLength(2); z++)
+        for(int z = cells.GetLength(2) - 1; z >= 0; z--)
         {
             for (int y = 0; y < cells.GetLength(1); y++)
             {
-                for (int z = 0; z < cells.GetLength(2); z++)
+                for (int x = 0; x < cells.GetLength(0); x++)
                 {
                     Cell cell = cells[x, y, z];
                     cell.ResetFlowDirection();
@@ -127,7 +128,6 @@ public class WaterSimulation
                         }
                     }
 
-                    // Check to ensure we still have liquid in this cell
                     if (remainValue < MinValue)
                     {
                         diffs[x, y, z] -= remainValue;
@@ -158,7 +158,6 @@ public class WaterSimulation
                         }
                     }
 
-                    // Check to ensure we still have liquid in this cell
                     if (remainValue < MinValue)
                     {
                         diffs[x, y, z] -= remainValue;
@@ -189,7 +188,6 @@ public class WaterSimulation
                         }
                     }
 
-                    // Check to ensure we still have liquid in this cell
                     if (remainValue < MinValue)
                     {
                         diffs[x, y, z] -= remainValue;
@@ -220,7 +218,6 @@ public class WaterSimulation
                         }
                     }
 
-                    // Check to ensure we still have liquid in this cell
                     if (remainValue < MinValue)
                     {
                         diffs[x, y, z] -= remainValue;
@@ -251,14 +248,12 @@ public class WaterSimulation
                         }
                     }
 
-                    // Check to ensure we still have liquid in this cell
                     if (remainValue < MinValue)
                     {
                         diffs[x, y, z] -= remainValue;
                         continue;
                     }
 
-                    // cell settleCount++ ...
                     if (startValue == remainValue)
                     {
                         cell.settleCount++;
@@ -272,6 +267,7 @@ public class WaterSimulation
                     {
                         cell.UnsettledNeighbors();
                     }
+
                 }
             }
         }

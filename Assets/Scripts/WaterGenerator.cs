@@ -43,7 +43,7 @@ public class WaterGenerator : MonoBehaviour
         while (true)
         {
             waterSimulation.Simulate(ref TileManager.Instance.grid.GetCellArrayRef());
-            yield return YieldInStructionCache.WaitForSeconds(2f);
+            yield return YieldInStructionCache.WaitForSeconds(5.0f);
         }
     }
 
@@ -60,7 +60,7 @@ public class WaterGenerator : MonoBehaviour
 
                     for (int z = height - 1; z >= 0; z--)
                     {
-                        if (TileManager.Instance.grid.cellArray[x, y, z].Liquid > 0.05f)
+                        if (TileManager.Instance.grid.cellArray[x, y, z].Liquid > 0.01f)
                         {
                             waterHeight = z;
                             break;
@@ -79,8 +79,8 @@ public class WaterGenerator : MonoBehaviour
     {
         while (true)
         {
-            TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(0.5f);
-            yield return YieldInStructionCache.WaitForSeconds(3f);
+            TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(0.1f);
+            yield return YieldInStructionCache.WaitForSeconds(10.0f);
         }
     }
 
