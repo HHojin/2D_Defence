@@ -4,25 +4,17 @@ using UnityEngine;
 //public class GridXY<GridObject>
 public class GridXY
 {
-    public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
-
-    public class OnGridObjectChangedEventArgs : EventArgs
-    {
-        public int x;
-        public int y;
-    }
-
     private int width;
     private int height;
     private float cellSize = 1f;
     private int cellHeight;
     private Vector3 originPosition;
-    //private GridObject[,] gridArray;
+
     private int[,] gridArray; // Terrain Height
     public Cell[,,] cellArray; // Water simulation
+    private PlacedObjectData placedObjectData;
 
     //public GridXY(int width, int height, float cellSize, Vector3 originPosition, Func<GridXY<GridObject>, int, int, GridObject> createGridObject)
-    //public GridXY(int width, int height, float cellSize, GameObject tile)
     public GridXY(int width, int height, float cellSize, int cellHeight)
     {
         this.width = width;
@@ -85,6 +77,8 @@ public class GridXY
         return 0;
     }
 
+    public ref int[,] GetGridArrayRef() => ref gridArray;
+
     public ref Cell[,,] GetCellArrayRef() => ref cellArray;
 
     public void UpdateNeighbors()
@@ -95,7 +89,6 @@ public class GridXY
             {
                 for (int z = 0; z < cellHeight; z++)
                 {
-                    //Debug.Log(x + ", " + y + ", " + z);
                     if (x > 0) cellArray[x, y, z].Left = cellArray[x - 1, y, z];
                     if (x < width - 2) cellArray[x, y, z].Right = cellArray[x + 1, y, z];
                     if (y > 0) cellArray[x, y, z].Down = cellArray[x, y - 1, z];

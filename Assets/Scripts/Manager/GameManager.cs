@@ -10,5 +10,6 @@ public class GameManager : Singleton<GameManager>
     public void MapGenerated(float x, float y)
     {
         mapGenerated.Invoke(x, y);
+
     }
 }

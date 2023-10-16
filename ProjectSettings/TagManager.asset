@@ -11,7 +11,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Grid
+  - 
   - Water
   - UI
   - 
@@ -52,6 +52,12 @@ TagManager:
     locked: 0
   - name: Grid
     uniqueID: 2941565521
+    locked: 0
+  - name: PlacementObject
+    uniqueID: 1089406993
+    locked: 0
+  - name: Preview
+    uniqueID: 1765029161
     locked: 0
   - name: UI
     uniqueID: 127167515

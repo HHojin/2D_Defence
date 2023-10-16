@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ad24567c3954747ae177181eae172f, type: 3}
+  m_Name: DataBase
+  m_EditorClassIdentifier: 
+  objectsData:
+  - <Name>k__BackingField: Collector
+    <ID>k__BackingField: 0
+    <Size>k__BackingField: {x: 3, y: 3}
+    <Prefab>k__BackingField: {fileID: 7684146272412761582, guid: b6d6a3c7906a8094e8e6acfb16d3e2c5, type: 3}
+  - <Name>k__BackingField: Relay
+    <ID>k__BackingField: 1
+    <Size>k__BackingField: {x: 3, y: 3}
+    <Prefab>k__BackingField: {fileID: 278948712714981594, guid: cf3f9a4bfc1def94fa4a69fcff2e6fcf, type: 3}
+  - <Name>k__BackingField: Storage
+    <ID>k__BackingField: 2
+    <Size>k__BackingField: {x: 3, y: 3}
+    <Prefab>k__BackingField: {fileID: 5598450314718798146, guid: 574dfa9a108ccc34f9ac78216653fac2, type: 3}
+  - <Name>k__BackingField: Speed
+    <ID>k__BackingField: 3
+    <Size>k__BackingField: {x: 3, y: 3}
+    <Prefab>k__BackingField: {fileID: 5051820583132399679, guid: 7e1b87216296d8945b51963d4c0859d7, type: 3}
+  - <Name>k__BackingField: Reactor
+    <ID>k__BackingField: 4
+    <Size>k__BackingField: {x: 3, y: 3}
+    <Prefab>k__BackingField: {fileID: 5443025844964060462, guid: 05ecf5b850badf74d8fdf7acc5d95f66, type: 3}
