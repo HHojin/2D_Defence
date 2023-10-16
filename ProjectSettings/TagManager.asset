@@ -3,12 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Map
+  - Water
+  - Object
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Grid
   - Water
   - UI
   - 
@@ -47,6 +50,9 @@ TagManager:
   - name: WaterHeight
     uniqueID: 3027338189
     locked: 0
-  - name: UI
+  - name: Grid
     uniqueID: 2941565521
+    locked: 0
+  - name: UI
+    uniqueID: 127167515
     locked: 0

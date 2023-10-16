@@ -308,4 +308,4 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
   tilesToConnect:
-  - {fileID: 11400000, guid: 40b419da10737664b8307005239893b7, type: 2}
+  - {fileID: 11400000, guid: 35cdc4f79e631e34ebcbeb0578fa90de, type: 2}
