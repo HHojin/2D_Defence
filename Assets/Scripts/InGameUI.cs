@@ -10,7 +10,8 @@ public class InGameUI : MonoBehaviour
 
     private void Update()
     {
-        ShowHeight();
+        if(GameManager.Instance.isMapGenerated)
+            ShowHeight();
     }
 
     public void ShowHeight()
@@ -33,11 +34,11 @@ public class InGameUI : MonoBehaviour
 
             var cellPos = TileManager.Instance.water.WorldToCell(mouseWorldPos);
             var cellValue = TileManager.Instance.grid.GetCellArray(cellPos.x, cellPos.y) + 1;
-
-            for (; idx <= cellValue; idx++)
-            {
-                heightBar[idx].color = water;
-            }
+            if(cellValue > 1)
+                for (; idx <= cellValue; idx++)
+                {
+                    heightBar[idx].color = water;
+                }
 
             for (; idx < heightBar.Length; idx++)
             {

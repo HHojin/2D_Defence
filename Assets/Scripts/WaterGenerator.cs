@@ -21,6 +21,7 @@ public class WaterGenerator : MonoBehaviour
         length = TileManager.Instance.grid.GetWidth();
         width = TileManager.Instance.grid.GetHeight();
         height = TileManager.Instance.grid.GetCellHeight();
+        Debug.Log($"{length}, {width}, {height}");
 
         GameManager.Instance.mapGenerated.AddListener(StopCoroutine);
 
@@ -71,7 +72,7 @@ public class WaterGenerator : MonoBehaviour
                 }
             }
 
-            yield return YieldInStructionCache.WaitForEndOfFrame;
+            yield return YieldInStructionCache.WaitForSeconds(1.0f);
         }
     }
 

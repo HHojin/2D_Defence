@@ -27,6 +27,9 @@ public class PlacementSystem : MonoBehaviour
 
     public void StartPlaceMent(int ID)
     {
+        if (!GameManager.Instance.isMapGenerated)
+            return;
+
         StopPlacement();
         buildingState = new PlacementState(ID,
                                            grid,
@@ -52,15 +55,7 @@ public class PlacementSystem : MonoBehaviour
         buildingState.OnAction(gridPosition);
     }
 
-    //private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectID)
-    //{
-    //    PlacedObjectData selectedData = database.objectsData[selectedObjectID].ID == 0 ?
-    //        placedGridData : placedObjectData;
-
-    //    return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectID].Size);
-    //}
-
-    private void StopPlacement()
+    public void StopPlacement()
     {
         if (buildingState == null)
             return;
