@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PreviewSystem : MonoBehaviour
@@ -54,8 +51,9 @@ public class PreviewSystem : MonoBehaviour
     private void ApplyFeedBack(bool validity)
     {
         Color c = validity ? Color.green : Color.red;
-        cellIndicator.GetComponent<SpriteRenderer>().color = c;
         c.a = 0.5f;
+
+        cellIndicator.GetComponent<SpriteRenderer>().color = c;
     }
 
     private void MoveCursor(Vector3 position)

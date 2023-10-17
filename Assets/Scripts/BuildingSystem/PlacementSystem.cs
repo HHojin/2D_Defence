@@ -3,48 +3,45 @@ using UnityEngine;
 
 public class PlacementSystem : MonoBehaviour
 {
-    [SerializeField] private GameObject mouseIndicator;
     [SerializeField] private Grid grid;
     [SerializeField] private MouseController mouseController;
 
     [SerializeField] private ObjectsDatabaseSO database;
-    private int selectedObjectID = -1;
 
-    private PlacedObjectData placedObjectData, placedGridData;
-    private List<GameObject> placedGameObjets = new();
+    private PlacedObjectData placedObjectData;
 
     [SerializeField] private PreviewSystem preview;
 
     private Vector3 lastDetectedPosition = Vector3.zero;
+
+    [SerializeField] private ObjectPlaceManager objectPlaceManager;
+
+    private IBuildingState buildingState;
 
     private void Start()
     {
         StopPlacement();
 
         placedObjectData = new();
-        placedGridData = new();
     }
 
     public void StartPlaceMent(int ID)
     {
         StopPlacement();
+        buildingState = new PlacementState(ID,
+                                           grid,
+                                           preview,
+                                           database,
+                                           placedObjectData,
+                                           objectPlaceManager);
 
-        selectedObjectID = database.objectsData.FindIndex(data => data.ID == ID);
-        if(selectedObjectID < 0)
-        {
-            Debug.LogError($"No ID found {ID}");
-            return;
-        }
-
-        preview.StartShowPlcaementPreview(database.objectsData[selectedObjectID].Prefab,
-                                          database.objectsData[selectedObjectID].Size);
         mouseController.OnClicked += PlaceStructure;
         mouseController.OnExit += StopPlacement;
     }
 
     private void PlaceStructure()
     {
-        if(mouseController.IsPointerOverUI())
+        if (mouseController.IsPointerOverUI())
         {
             return;
         }
@@ -52,60 +49,44 @@ public class PlacementSystem : MonoBehaviour
         Vector3 mousePosition = mouseController.GetMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectID);
-        if (placementValidity == false)
-            return;
-
-        GameObject newObject = Instantiate(database.objectsData[selectedObjectID].Prefab);
-        newObject.transform.position = new Vector3
-            (grid.CellToWorld(gridPosition).x + 0.5f,
-            grid.CellToWorld(gridPosition).y + 0.5f);
-
-        placedGameObjets.Add(newObject);
-        PlacedObjectData selectedData = database.objectsData[selectedObjectID].ID == 0 ?
-            placedGridData :
-            placedObjectData;
-        selectedData.AddObject(gridPosition,
-            database.objectsData[selectedObjectID].Size,
-            database.objectsData[selectedObjectID].ID,
-            placedGameObjets.Count - 1);
-
-        preview.UpdatePosition(grid.WorldToCell(gridPosition) + new Vector3(0.5f, 0.5f), false);
+        buildingState.OnAction(gridPosition);
     }
 
-    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectID)
-    {
-        PlacedObjectData selectedData = database.objectsData[selectedObjectID].ID == 0 ?
-            placedGridData : placedObjectData;
+    //private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectID)
+    //{
+    //    PlacedObjectData selectedData = database.objectsData[selectedObjectID].ID == 0 ?
+    //        placedGridData : placedObjectData;
 
-
-        return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectID].Size);
-    }
+    //    return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectID].Size);
+    //}
 
     private void StopPlacement()
     {
-        selectedObjectID = -1;
-        preview.StopShowPreview();
+        if (buildingState == null)
+            return;
+
+        buildingState.EndState();
+
         mouseController.OnClicked -= PlaceStructure;
         mouseController.OnExit -= StopPlacement;
         lastDetectedPosition = Vector3Int.zero;
+
+        buildingState = null;
     }
 
     private void Update()
     {
-        if(selectedObjectID < 0)
+        if (buildingState == null)
             return;
 
         Vector3 mousePosition = mouseController.GetMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
         Vector3 lastGridPosition = grid.CellToWorld(gridPosition) + new Vector3(0.5f, 0.5f);
 
-        if(lastDetectedPosition != lastGridPosition)
+        if (lastDetectedPosition != lastGridPosition)
         {
-            bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectID);
+            buildingState.UpdateState(gridPosition);
 
-            mouseIndicator.transform.position = mousePosition;
-            preview.UpdatePosition(grid.CellToWorld(gridPosition) + new Vector3(0.5f, 0.5f), placementValidity);
             lastDetectedPosition = lastGridPosition;
         }
     }
