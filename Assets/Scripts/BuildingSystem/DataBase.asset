@@ -33,3 +33,15 @@ MonoBehaviour:
     <ID>k__BackingField: 4
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 5443025844964060462, guid: 05ecf5b850badf74d8fdf7acc5d95f66, type: 3}
+  - <Name>k__BackingField: Blaster
+    <ID>k__BackingField: 8
+    <Size>k__BackingField: {x: 3, y: 3}
+    <Prefab>k__BackingField: {fileID: 1835960955855215204, guid: d65fcb94aa6913a43bd829cc0ea06b8c, type: 3}
+  - <Name>k__BackingField: Mortar
+    <ID>k__BackingField: 9
+    <Size>k__BackingField: {x: 3, y: 3}
+    <Prefab>k__BackingField: {fileID: 8298530882208308730, guid: 36da91a991a4a4c4cb750af482ddc4cd, type: 3}
+  - <Name>k__BackingField: CommandNode
+    <ID>k__BackingField: 16
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
