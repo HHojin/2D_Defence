@@ -14,9 +14,9 @@ public class PlacedObjectData
         List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
         PlacementData data = new PlacementData(positionToOccupy, ID, placedObjectID);
 
-        foreach(var pos in positionToOccupy)
+        foreach (var pos in positionToOccupy)
         {
-            if(placedObjects.ContainsKey(pos))
+            if (placedObjects.ContainsKey(pos))
             {
                 throw new Exception($"Position already occupied {pos}");
             }
@@ -33,9 +33,9 @@ public class PlacedObjectData
                                              gridPosition.y - (objectSize.x - 1) / 2,
                                              gridPosition.z);
 
-        for(int x = 0; x < objectSize.x; x++)
+        for (int x = 0; x < objectSize.x; x++)
         {
-            for(int y = 0; y < objectSize.y; y++)
+            for (int y = 0; y < objectSize.y; y++)
             {
                 returnVal.Add(new Vector3Int(startPos.x + x, startPos.y + y, gridPosition.z));
             }
@@ -47,10 +47,20 @@ public class PlacedObjectData
     public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize)
     {
         List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
+        int gridCenterHeight = TileManager.Instance.grid.GetGridArray(gridPosition.x, gridPosition.y);
 
-        foreach(var pos in positionToOccupy)
+        foreach (var pos in positionToOccupy)
         {
-            if(placedObjects.ContainsKey(pos))
+            int tmpHeight = -1;
+
+            if (pos.x >= 0 && pos.y >= 0 &&
+               pos.x < TileManager.Instance.grid.GetWidth() &&
+               pos.y < TileManager.Instance.grid.GetHeight())
+                tmpHeight = TileManager.Instance.grid.GetGridArray(pos.x, pos.y);
+
+
+            if (placedObjects.ContainsKey(pos) ||
+                tmpHeight != gridCenterHeight)
                 return false;
         }
 

@@ -123,8 +123,8 @@ public class MouseController : MonoBehaviour
         var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         if (mouseWorldPos.x >= 0 && mouseWorldPos.y >= 0
-            && mouseWorldPos.x <= TileManager.Instance.grid.GetWidth()
-            && mouseWorldPos.y <= TileManager.Instance.grid.GetHeight())
+            && mouseWorldPos.x < TileManager.Instance.grid.GetWidth()
+            && mouseWorldPos.y < TileManager.Instance.grid.GetHeight())
         {
             //return new Vector2(mouseWorldPos.x + 0.5f, mouseWorldPos.y + 0.5f);
             return mouseWorldPos;

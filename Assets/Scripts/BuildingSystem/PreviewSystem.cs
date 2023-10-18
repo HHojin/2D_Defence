@@ -22,7 +22,7 @@ public class PreviewSystem : MonoBehaviour
 
     private void PrepareCursor(Vector2Int size)
     {
-        if(size.x > 0 || size.y > 0)
+        if (size.x > 0 || size.y > 0)
         {
             cellIndicator.transform.localScale = new Vector3(size.x, size.y, 1);
         }
@@ -64,5 +64,17 @@ public class PreviewSystem : MonoBehaviour
     private void MovePreview(Vector3 position)
     {
         previewObject.transform.position = position;
+    }
+
+    public void InsideOfMap()
+    {
+        cellIndicator.SetActive(true);
+        previewObject.SetActive(true);
+    }
+
+    public void OutOfMap()
+    {
+        cellIndicator.SetActive(false);
+        previewObject.SetActive(false);
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlacementSystem : MonoBehaviour
@@ -78,11 +77,19 @@ public class PlacementSystem : MonoBehaviour
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
         Vector3 lastGridPosition = grid.CellToWorld(gridPosition) + new Vector3(0.5f, 0.5f);
 
-        if (lastDetectedPosition != lastGridPosition)
+        if (gridPosition.x != -1 && gridPosition.y != -1)
         {
-            buildingState.UpdateState(gridPosition);
+            if (lastDetectedPosition != lastGridPosition)
+            {
+                preview.InsideOfMap();
+                buildingState.UpdateState(gridPosition);
 
-            lastDetectedPosition = lastGridPosition;
+                lastDetectedPosition = lastGridPosition;
+            }
+        }
+        else
+        {
+            preview.OutOfMap();
         }
     }
 }

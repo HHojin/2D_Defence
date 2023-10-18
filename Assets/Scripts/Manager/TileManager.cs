@@ -21,8 +21,8 @@ public class TileManager : Singleton<TileManager>
     public TileBase[] waterTileBase = new TileBase[5];
 
     [Header("Grid Info")]
-    [SerializeField] private int gridWidth = 100;
-    [SerializeField] private int gridHeight = 100;
+    [SerializeField] private int gridWidth = 140;
+    [SerializeField] private int gridHeight = 90;
     [SerializeField] private float cellSize = 1f;
     [SerializeField] private int cellHeight = 5;
 
