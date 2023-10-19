@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PreviewSystem : MonoBehaviour
@@ -18,6 +19,11 @@ public class PreviewSystem : MonoBehaviour
         PreparePreview(previewObject);
         PrepareCursor(size);
         cellIndicator.SetActive(true);
+    }
+
+    public void StartShowRemovePreview()
+    {
+        PrepareCursor(Vector2Int.one);
     }
 
     private void PrepareCursor(Vector2Int size)

@@ -45,6 +45,7 @@ public class WaterGenerator : MonoBehaviour
         {
             waterSimulation.Simulate(ref TileManager.Instance.grid.GetCellArrayRef());
             yield return YieldInStructionCache.WaitForSeconds(5.0f);
+            //yield return new WaitForSeconds(1.0f);
         }
     }
 
@@ -73,6 +74,7 @@ public class WaterGenerator : MonoBehaviour
             }
 
             yield return YieldInStructionCache.WaitForSeconds(1.0f);
+            //yield return new WaitForSeconds(1.0f);
         }
     }
 
@@ -80,8 +82,9 @@ public class WaterGenerator : MonoBehaviour
     {
         while (true)
         {
-            TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(0.1f);
+            TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(1.0f);
             yield return YieldInStructionCache.WaitForSeconds(10.0f);
+            //yield return new WaitForSeconds(2.0f);
         }
     }
 

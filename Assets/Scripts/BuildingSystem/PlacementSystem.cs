@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlacementSystem : MonoBehaviour
 {
     [SerializeField] private Grid grid;
-    [SerializeField] private MouseController mouseController;
+    [SerializeField] private InputManager inputManager;
 
     [SerializeField] private ObjectsDatabaseSO database;
 
@@ -24,6 +24,7 @@ public class PlacementSystem : MonoBehaviour
         placedObjectData = new();
     }
 
+    //BuildingUI -> UI button
     public void StartPlaceMent(int ID)
     {
         if (!GameManager.Instance.isMapGenerated)
@@ -37,18 +38,31 @@ public class PlacementSystem : MonoBehaviour
                                            placedObjectData,
                                            objectPlaceManager);
 
-        mouseController.OnClicked += PlaceStructure;
-        mouseController.OnExit += StopPlacement;
+        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnExit += StopPlacement;
+    }
+
+    public void StartRemove(GameObject placement)
+    {
+        StopPlacement();
+        buildingState = new RemoveState(placement,
+                                        grid,
+                                        preview,
+                                        placedObjectData,
+                                        objectPlaceManager);
+
+        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnExit += StopPlacement;
     }
 
     private void PlaceStructure()
     {
-        if (mouseController.IsPointerOverUI())
+        if (inputManager.IsPointerOverUI())
         {
             return;
         }
 
-        Vector3 mousePosition = mouseController.GetMapPosition();
+        Vector3 mousePosition = inputManager.GetMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
         buildingState.OnAction(gridPosition);
@@ -61,8 +75,8 @@ public class PlacementSystem : MonoBehaviour
 
         buildingState.EndState();
 
-        mouseController.OnClicked -= PlaceStructure;
-        mouseController.OnExit -= StopPlacement;
+        inputManager.OnClicked -= PlaceStructure;
+        inputManager.OnExit -= StopPlacement;
         lastDetectedPosition = Vector3Int.zero;
 
         buildingState = null;
@@ -72,8 +86,10 @@ public class PlacementSystem : MonoBehaviour
     {
         if (buildingState == null)
             return;
+        if(buildingState.GetStateType() != (int)IBuildingState.state.Placement)
+            return;
 
-        Vector3 mousePosition = mouseController.GetMapPosition();
+        Vector3 mousePosition = inputManager.GetMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
         Vector3 lastGridPosition = grid.CellToWorld(gridPosition) + new Vector3(0.5f, 0.5f);
 

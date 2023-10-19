@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,5 +12,14 @@ public class ObjectPlaceManager : MonoBehaviour
         newObject.transform.position = position;
         placedGameObjets.Add(newObject);
         return placedGameObjets.Count - 1;
+    }
+
+    public void RemoveObjectAt(int gameObjectID)
+    {
+        if (placedGameObjets.Count <= gameObjectID || placedGameObjets[gameObjectID] == null)
+            return;
+
+        Destroy(placedGameObjets[gameObjectID]);
+        placedGameObjets[gameObjectID] = null;
     }
 }

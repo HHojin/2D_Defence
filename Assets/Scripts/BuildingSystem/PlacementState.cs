@@ -34,9 +34,9 @@ public class PlacementState : IBuildingState
             throw new System.Exception($"No ID found {iD}");
     }
 
-    public void EndState()
+    public int GetStateType()
     {
-        previewSystem.StopShowPreview();
+        return (int)IBuildingState.state.Placement;
     }
 
     public void OnAction(Vector3Int gridPosition)
@@ -70,5 +70,10 @@ public class PlacementState : IBuildingState
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectID);
 
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition) + new Vector3(0.5f, 0.5f), placementValidity);
+    }
+
+    public void EndState()
+    {
+        previewSystem.StopShowPreview();
     }
 }

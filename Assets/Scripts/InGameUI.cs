@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
 {
+    [Header("Height Bar")]
     public Image[] heightBar;
     private Color terrain = new Color(0f, 255f, 0f, 255f);
     private Color water = new Color(0f, 0f, 255f, 255f);

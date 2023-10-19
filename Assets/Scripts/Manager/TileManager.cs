@@ -99,7 +99,8 @@ public class TileManager : Singleton<TileManager>
             {
                 var tmp = map.WorldToCell(mouseWorldPos);
                 terrainHeight.text = "[" + tmp.x + "," + tmp.y + "]"
-                                    + grid.GetGridArray(tmp.x, tmp.y);
+                                    + grid.GetGridArray(tmp.x, tmp.y) + " "
+                                    + grid.GetCellArray(tmp.x, tmp.y);
             }
         }
     }

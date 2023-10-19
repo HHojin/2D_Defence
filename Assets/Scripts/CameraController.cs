@@ -1,11 +1,8 @@
-using System;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.EventSystems;
-//tmp
 using UnityEngine.Events;
 
-public class MouseController : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     [Header("Sreen Controll")]
     [SerializeField] private float panSpeed = 30f;
@@ -21,8 +18,6 @@ public class MouseController : MonoBehaviour
     private Transform cameraTransform;
 
     [HideInInspector] private UnityEvent<float, float> mapGenerated;
-
-    public event Action OnClicked, OnExit;
 
     private void Awake()
     {
@@ -53,11 +48,6 @@ public class MouseController : MonoBehaviour
         {
             ZoomScreen(z);
         }
-
-        if (Input.GetMouseButtonDown(0))
-            OnClicked?.Invoke();
-        if (Input.GetKeyDown(KeyCode.Escape))
-            OnExit?.Invoke();
     }
 
     private void FixedUpdate()
@@ -112,26 +102,5 @@ public class MouseController : MonoBehaviour
         virtualCamera.gameObject.transform.position = new Vector3(x / 2, y / 2, -10f);
 
         confiner.InvalidateCache();
-    }
-
-
-    //BuildingSystem..
-    public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();
-
-    public Vector2 GetMapPosition()
-    {
-        var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        if (mouseWorldPos.x >= 0 && mouseWorldPos.y >= 0
-            && mouseWorldPos.x < TileManager.Instance.grid.GetWidth()
-            && mouseWorldPos.y < TileManager.Instance.grid.GetHeight())
-        {
-            //return new Vector2(mouseWorldPos.x + 0.5f, mouseWorldPos.y + 0.5f);
-            return mouseWorldPos;
-        }
-        else
-        {
-            return new Vector2(-1, -1);
-        }
     }
 }

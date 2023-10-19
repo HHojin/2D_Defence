@@ -17,31 +17,39 @@ MonoBehaviour:
     <ID>k__BackingField: 0
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 7684146272412761582, guid: b6d6a3c7906a8094e8e6acfb16d3e2c5, type: 3}
+    <CanMove>k__BackingField: 0
   - <Name>k__BackingField: Relay
     <ID>k__BackingField: 1
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 278948712714981594, guid: cf3f9a4bfc1def94fa4a69fcff2e6fcf, type: 3}
+    <CanMove>k__BackingField: 0
   - <Name>k__BackingField: Storage
     <ID>k__BackingField: 2
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 5598450314718798146, guid: 574dfa9a108ccc34f9ac78216653fac2, type: 3}
+    <CanMove>k__BackingField: 0
   - <Name>k__BackingField: Speed
     <ID>k__BackingField: 3
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 5051820583132399679, guid: 7e1b87216296d8945b51963d4c0859d7, type: 3}
+    <CanMove>k__BackingField: 0
   - <Name>k__BackingField: Reactor
     <ID>k__BackingField: 4
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 5443025844964060462, guid: 05ecf5b850badf74d8fdf7acc5d95f66, type: 3}
+    <CanMove>k__BackingField: 0
   - <Name>k__BackingField: Blaster
     <ID>k__BackingField: 8
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 1835960955855215204, guid: d65fcb94aa6913a43bd829cc0ea06b8c, type: 3}
+    <CanMove>k__BackingField: 1
   - <Name>k__BackingField: Mortar
     <ID>k__BackingField: 9
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 8298530882208308730, guid: 36da91a991a4a4c4cb750af482ddc4cd, type: 3}
+    <CanMove>k__BackingField: 1
   - <Name>k__BackingField: CommandNode
     <ID>k__BackingField: 16
     <Size>k__BackingField: {x: 5, y: 5}
     <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
