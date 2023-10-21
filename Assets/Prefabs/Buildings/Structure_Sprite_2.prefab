@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8010014919254979286}
   - component: {fileID: 7949098476492483207}
   - component: {fileID: 6774533536055252292}
-  m_Layer: 7
+  - component: {fileID: -1843508608335943991}
+  m_Layer: 0
   m_Name: Structure_Sprite_2
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,3 +121,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.55
+--- !u!114 &-1843508608335943991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278948712714981594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84584596b49567146901e2a2ad28c8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

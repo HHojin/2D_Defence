@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Map
   - Water
-  - Object
+  - Building
   layers:
   - Default
   - TransparentFX

@@ -4,33 +4,36 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
+    /*
     public GameObject buildingUI;
     public GameObject objectUI;
-
+    */
     public event Action OnClicked, OnExit;
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 clickPos = new Vector2(worldPos.x, worldPos.y);
             Collider2D clickColl = Physics2D.OverlapPoint(clickPos);
 
             if (clickColl != null && clickColl.CompareTag("Building"))
             {
-                buildingUI.SetActive(false);
-                objectUI.SetActive(true);
+                clickColl.GetComponent<Building>().OnClick();
             }
+            
 
             OnClicked?.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            /*
             buildingUI.SetActive(true);
             objectUI.SetActive(false);
-
+            */
             OnExit?.Invoke();
         }
     }

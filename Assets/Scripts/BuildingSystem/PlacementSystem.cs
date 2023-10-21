@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlacementSystem : MonoBehaviour
+public class PlacementSystem : Singleton<PlacementSystem>
 {
     [SerializeField] private Grid grid;
     [SerializeField] private InputManager inputManager;
@@ -17,7 +17,7 @@ public class PlacementSystem : MonoBehaviour
 
     private IBuildingState buildingState;
 
-    private void Start()
+    protected override void Awake()
     {
         StopPlacement();
 
@@ -41,6 +41,21 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
+    
+    public void StartSelect(GameObject placement)
+    {
+        StopPlacement();
+        buildingState = new SelectState(placement,
+                                        grid,
+                                        preview,
+                                        database,
+                                        placedObjectData,
+                                        objectPlaceManager);
+
+        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnExit += StopPlacement;
+    }
+    
 
     public void StartRemove(GameObject placement)
     {
@@ -86,7 +101,7 @@ public class PlacementSystem : MonoBehaviour
     {
         if (buildingState == null)
             return;
-        if(buildingState.GetStateType() != (int)IBuildingState.state.Placement)
+        if (buildingState.GetStateType() == (int)state.Remove)
             return;
 
         Vector3 mousePosition = inputManager.GetMapPosition();

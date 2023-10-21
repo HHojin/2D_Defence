@@ -1,42 +1,40 @@
 using UnityEngine;
 
-public class PlacementState : IBuildingState
+public class SelectState : IBuildingState
 {
     private int selectedObjectID = -1;
-    private int ID;
     private Grid grid;
     private PreviewSystem previewSystem;
     private ObjectsDatabaseSO database;
     private PlacedObjectData placedObjectData;
     private ObjectPlaceManager objectPlaceManager;
 
-    public PlacementState(int iD,
-                          Grid grid,
-                          PreviewSystem previewSystem,
-                          ObjectsDatabaseSO database,
-                          PlacedObjectData placedObjectData,
-                          ObjectPlaceManager objectPlaceManager)
+    public SelectState(GameObject placement,
+                       Grid grid,
+                       PreviewSystem previewSystem,
+                       ObjectsDatabaseSO database,
+                       PlacedObjectData placedObjectData,
+                       ObjectPlaceManager objectPlaceManager)
     {
-        ID = iD;
         this.grid = grid;
         this.previewSystem = previewSystem;
         this.database = database;
         this.placedObjectData = placedObjectData;
         this.objectPlaceManager = objectPlaceManager;
 
-        selectedObjectID = database.objectsData.FindIndex(data => data.ID == ID);
-        if (selectedObjectID > -1)
+        selectedObjectID = placement.GetComponent<Building>().data.ID;
+        if (selectedObjectID >= 8)
         {
             previewSystem.StartShowPlcaementPreview(database.objectsData[selectedObjectID].Prefab,
-                                                    database.objectsData[selectedObjectID].Size);
+                                        database.objectsData[selectedObjectID].Size);
         }
         else
-            throw new System.Exception($"No ID found {iD}");
+            throw new System.Exception($"No ID found {selectedObjectID}");
     }
 
     public int GetStateType()
     {
-        return (int)state.Placement;
+        return (int)state.Select;
     }
 
     public void OnAction(Vector3Int gridPosition)

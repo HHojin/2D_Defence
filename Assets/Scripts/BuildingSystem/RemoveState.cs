@@ -26,27 +26,15 @@ public class RemoveState : IBuildingState
 
     public int GetStateType()
     {
-        return (int)IBuildingState.state.Remove;
+        return (int)state.Remove;
     }
 
     public void OnAction(Vector3Int gridPosition)
     {
         PlacedObjectData selectedData = placedObjectData;
 
-        if (selectedData == null)
-        {
-
-        }
-        else
-        {
-            gameObjectID = selectedData.GetRepresentationIndex(gridPosition);
-
-            if (gameObjectID == -1)
-                return;
-
-            selectedData.RemoveObjectAt(gridPosition);
-            objectPlaceManager.RemoveObjectAt(gameObjectID);
-        }
+        selectedData.RemoveObjectAt(gridPosition);
+        objectPlaceManager.RemoveObjectAt(gameObjectID);
 
         Vector3 gridPlacementPosition = grid.CellToWorld(gridPosition) + new Vector3(0.5f, 0.5f);
         previewSystem.UpdatePosition(gridPlacementPosition, true);

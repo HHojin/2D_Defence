@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8814363062982249815}
   - component: {fileID: 4811548854933687182}
   - component: {fileID: 796332992153913940}
-  m_Layer: 7
+  - component: {fileID: -5483563210354065276}
+  m_Layer: 0
   m_Name: Weapon_Sprite_2
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,3 +131,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.14, y: 1.16}
   m_EdgeRadius: 0
+--- !u!114 &-5483563210354065276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8298530882208308730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84584596b49567146901e2a2ad28c8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

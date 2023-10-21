@@ -6,10 +6,12 @@ public class ObjectPlaceManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> placedGameObjets = new();
 
-    public int PlaceObject(GameObject prefab, Vector3 position)
+    //public int PlaceObject(GameObject prefab, Vector3 position)
+    public int PlaceObject(ObjectData data, Vector3 position)
     {
-        GameObject newObject = Instantiate(prefab);
+        GameObject newObject = Instantiate(data.Prefab);
         newObject.transform.position = position;
+        newObject.GetComponent<Building>().data = data;
         placedGameObjets.Add(newObject);
         return placedGameObjets.Count - 1;
     }
