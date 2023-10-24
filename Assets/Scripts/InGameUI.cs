@@ -4,10 +4,14 @@ using UnityEngine.UI;
 public class InGameUI : MonoBehaviour
 {
     [Header("Height Bar")]
-    public Image[] heightBar;
+    [SerializeField] private Image[] heightBar;
     private Color terrain = new Color(0f, 255f, 0f, 255f);
     private Color water = new Color(0f, 0f, 255f, 255f);
     private Color none = new Color(0f, 0f, 0f, 0f);
+
+    [Header("OnClickUI")]
+    [SerializeField] private GameObject buildingUI;
+    [SerializeField] private GameObject objectUI;
 
     private void Update()
     {
@@ -53,5 +57,17 @@ public class InGameUI : MonoBehaviour
                 heightBar[i].color = none;
             }
         }
+    }
+
+    public void OnClickObject()
+    {
+        buildingUI.SetActive(false);
+        objectUI.SetActive(true);
+    }
+
+    public void OnExitObject()
+    {
+        buildingUI.SetActive(true);
+        objectUI.SetActive(false);
     }
 }

@@ -38,6 +38,21 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 5443025844964060462, guid: 05ecf5b850badf74d8fdf7acc5d95f66, type: 3}
     <CanMove>k__BackingField: 0
+  - <Name>k__BackingField: 5
+    <ID>k__BackingField: 5
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
+  - <Name>k__BackingField: 6
+    <ID>k__BackingField: 6
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
+  - <Name>k__BackingField: 7
+    <ID>k__BackingField: 7
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
   - <Name>k__BackingField: Blaster
     <ID>k__BackingField: 8
     <Size>k__BackingField: {x: 3, y: 3}
@@ -48,7 +63,37 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 3, y: 3}
     <Prefab>k__BackingField: {fileID: 8298530882208308730, guid: 36da91a991a4a4c4cb750af482ddc4cd, type: 3}
     <CanMove>k__BackingField: 1
-  - <Name>k__BackingField: CommandNode
+  - <Name>k__BackingField: 10
+    <ID>k__BackingField: 10
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
+  - <Name>k__BackingField: 11
+    <ID>k__BackingField: 11
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
+  - <Name>k__BackingField: 12
+    <ID>k__BackingField: 12
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
+  - <Name>k__BackingField: 13
+    <ID>k__BackingField: 13
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
+  - <Name>k__BackingField: 14
+    <ID>k__BackingField: 14
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
+  - <Name>k__BackingField: 15
+    <ID>k__BackingField: 15
+    <Size>k__BackingField: {x: 5, y: 5}
+    <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}
+    <CanMove>k__BackingField: 1
+  - <Name>k__BackingField: Orbital
     <ID>k__BackingField: 16
     <Size>k__BackingField: {x: 5, y: 5}
     <Prefab>k__BackingField: {fileID: 8769097244270979237, guid: 64f4533a5230d0a4a83a4d2737ec4150, type: 3}

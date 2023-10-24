@@ -8,37 +8,45 @@ public class SelectState : IBuildingState
     private ObjectsDatabaseSO database;
     private PlacedObjectData placedObjectData;
     private ObjectPlaceManager objectPlaceManager;
+    private InGameUI inGameUI;
 
     public SelectState(GameObject placement,
                        Grid grid,
                        PreviewSystem previewSystem,
                        ObjectsDatabaseSO database,
                        PlacedObjectData placedObjectData,
-                       ObjectPlaceManager objectPlaceManager)
+                       ObjectPlaceManager objectPlaceManager,
+                       InGameUI inGameUI)
     {
         this.grid = grid;
         this.previewSystem = previewSystem;
         this.database = database;
         this.placedObjectData = placedObjectData;
         this.objectPlaceManager = objectPlaceManager;
+        this.inGameUI = inGameUI;
 
         selectedObjectID = placement.GetComponent<Building>().data.ID;
+        inGameUI.OnClickObject();
+
         if (selectedObjectID >= 8)
         {
             previewSystem.StartShowPlcaementPreview(database.objectsData[selectedObjectID].Prefab,
-                                        database.objectsData[selectedObjectID].Size);
+                                                    database.objectsData[selectedObjectID].Size);
         }
-        else
-            throw new System.Exception($"No ID found {selectedObjectID}");
+        //else
+        //    throw new System.Exception($"No ID found {selectedObjectID}");
     }
 
     public int GetStateType()
     {
-        return (int)state.Select;
+        return selectedObjectID >= 8 ? (int)state.SelectCanMove : (int)state.SelectCantMove;
     }
 
     public void OnAction(Vector3Int gridPosition)
     {
+        if (selectedObjectID < 8)
+            return;
+
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectID);
         if (placementValidity == false)
             return;
@@ -73,5 +81,6 @@ public class SelectState : IBuildingState
     public void EndState()
     {
         previewSystem.StopShowPreview();
+        inGameUI.OnExitObject();
     }
 }

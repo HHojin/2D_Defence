@@ -14,16 +14,17 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 clickPos = new Vector2(worldPos.x, worldPos.y);
-            Collider2D clickColl = Physics2D.OverlapPoint(clickPos);
-
-            if (clickColl != null && clickColl.CompareTag("Building"))
+            if(OnClicked == null)
             {
-                clickColl.GetComponent<Building>().OnClick();
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 clickPos = new Vector2(worldPos.x, worldPos.y);
+                Collider2D clickColl = Physics2D.OverlapPoint(clickPos);
+
+                if (clickColl != null && clickColl.CompareTag("Building"))
+                {
+                    clickColl.GetComponent<Building>().OnClick();
+                }
             }
-            
 
             OnClicked?.Invoke();
         }

@@ -2634,6 +2634,7 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 31edb9ca97240bc43b26e2bb556b2d48, type: 2}
   preview: {fileID: 1541182438}
   objectPlaceManager: {fileID: 1732432611}
+  inGameUI: {fileID: 1071607724}
 --- !u!1 &384230710
 GameObject:
   m_ObjectHideFlags: 0
@@ -5887,6 +5888,8 @@ MonoBehaviour:
   - {fileID: 2020064745}
   - {fileID: 1661033075}
   - {fileID: 2130238088}
+  buildingUI: {fileID: 1525097318}
+  objectUI: {fileID: 1173461264}
 --- !u!1 &1075492573
 GameObject:
   m_ObjectHideFlags: 0

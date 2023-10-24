@@ -3,7 +3,8 @@
 public enum state
 {
     Placement,
-    Select,
+    SelectCanMove,
+    SelectCantMove,
     Remove
 }
 

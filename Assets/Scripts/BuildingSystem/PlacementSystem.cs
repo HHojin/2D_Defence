@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class PlacementSystem : Singleton<PlacementSystem>
 {
-    [SerializeField] private Grid grid;
-    [SerializeField] private InputManager inputManager;
-
-    [SerializeField] private ObjectsDatabaseSO database;
-
     private PlacedObjectData placedObjectData;
 
+    [SerializeField] private Grid grid;
+
+    [Header("Script")]
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private ObjectsDatabaseSO database;
     [SerializeField] private PreviewSystem preview;
+    [SerializeField] private ObjectPlaceManager objectPlaceManager;
+    [SerializeField] private InGameUI inGameUI;
 
     private Vector3 lastDetectedPosition = Vector3.zero;
-
-    [SerializeField] private ObjectPlaceManager objectPlaceManager;
 
     private IBuildingState buildingState;
 
@@ -50,7 +50,8 @@ public class PlacementSystem : Singleton<PlacementSystem>
                                         preview,
                                         database,
                                         placedObjectData,
-                                        objectPlaceManager);
+                                        objectPlaceManager,
+                                        inGameUI);
 
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
@@ -101,7 +102,8 @@ public class PlacementSystem : Singleton<PlacementSystem>
     {
         if (buildingState == null)
             return;
-        if (buildingState.GetStateType() == (int)state.Remove)
+        if (buildingState.GetStateType() == (int)state.Remove ||
+            buildingState.GetStateType() == (int)state.SelectCantMove)
             return;
 
         Vector3 mousePosition = inputManager.GetMapPosition();
