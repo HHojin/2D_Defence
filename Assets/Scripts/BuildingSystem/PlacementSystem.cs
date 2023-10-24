@@ -42,6 +42,7 @@ public class PlacementSystem : Singleton<PlacementSystem>
         inputManager.OnExit += StopPlacement;
     }
     
+    //GameScene -> click on building
     public void StartSelect(GameObject placement)
     {
         StopPlacement();

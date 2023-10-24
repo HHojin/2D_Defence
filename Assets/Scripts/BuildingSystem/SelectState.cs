@@ -3,6 +3,8 @@ using UnityEngine;
 public class SelectState : IBuildingState
 {
     private int selectedObjectID = -1;
+    private Vector3Int selectedObjectGridPosition;
+    private int selectedObjectIndex = -1;
     private Grid grid;
     private PreviewSystem previewSystem;
     private ObjectsDatabaseSO database;
@@ -35,7 +37,10 @@ public class SelectState : IBuildingState
         }
         //else
         //    throw new System.Exception($"No ID found {selectedObjectID}");
-    }
+
+        selectedObjectGridPosition = placement.GetComponent<Building>().GridPosition;
+        selectedObjectIndex = placement.GetComponent<Building>().PlacedObjectIndex;
+}
 
     public int GetStateType()
     {
@@ -52,16 +57,21 @@ public class SelectState : IBuildingState
             return;
 
         int index = objectPlaceManager.PlaceObject(database.objectsData[selectedObjectID],
+                                                   gridPosition,
                                                    new Vector3(grid.CellToWorld(gridPosition).x + 0.5f,
                                                                grid.CellToWorld(gridPosition).y + 0.5f));
 
         PlacedObjectData selectedData = placedObjectData;
+        selectedData.RemoveObjectAt(selectedObjectGridPosition);
+        objectPlaceManager.RemoveObjectAt(selectedObjectIndex);
+
         selectedData.AddObject(gridPosition,
             database.objectsData[selectedObjectID].Size,
             database.objectsData[selectedObjectID].ID,
             index);
 
         previewSystem.UpdatePosition(grid.WorldToCell(gridPosition) + new Vector3(0.5f, 0.5f), false);
+        PlacementSystem.Instance.StopPlacement();
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectID)

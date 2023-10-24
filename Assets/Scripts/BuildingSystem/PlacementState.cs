@@ -46,6 +46,7 @@ public class PlacementState : IBuildingState
             return;
 
         int index = objectPlaceManager.PlaceObject(database.objectsData[selectedObjectID],
+                                                   gridPosition,
                                                    new Vector3(grid.CellToWorld(gridPosition).x + 0.5f,
                                                                grid.CellToWorld(gridPosition).y + 0.5f));
 
