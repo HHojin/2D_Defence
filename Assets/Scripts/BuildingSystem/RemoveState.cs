@@ -2,26 +2,24 @@ using UnityEngine;
 
 public class RemoveState : IBuildingState
 {
-    private int gameObjectID = -1;
-    private GameObject placement;
-    private Grid grid;
+    private int selectedObjectIndex = -1;
     private PreviewSystem previewSystem;
     private PlacedObjectData placedObjectData;
     private ObjectPlaceManager objectPlaceManager;
+    private InGameUI inGameUI;
 
     public RemoveState(GameObject placement,
-                       Grid grid,
                        PreviewSystem previewSystem,
                        PlacedObjectData placedObjectData,
-                       ObjectPlaceManager objectPlaceManager)
+                       ObjectPlaceManager objectPlaceManager,
+                       InGameUI inGameUI)
     {
-        this.placement = placement;
-        this.grid = grid;
         this.previewSystem = previewSystem;
         this.placedObjectData = placedObjectData;
         this.objectPlaceManager = objectPlaceManager;
+        this.inGameUI = inGameUI;
 
-        previewSystem.StartShowRemovePreview();
+        selectedObjectIndex = placement.GetComponent<Building>().PlacedObjectIndex;
     }
 
     public int GetStateType()
@@ -34,10 +32,7 @@ public class RemoveState : IBuildingState
         PlacedObjectData selectedData = placedObjectData;
 
         selectedData.RemoveObjectAt(gridPosition);
-        objectPlaceManager.RemoveObjectAt(gameObjectID);
-
-        Vector3 gridPlacementPosition = grid.CellToWorld(gridPosition) + new Vector3(0.5f, 0.5f);
-        previewSystem.UpdatePosition(gridPlacementPosition, true);
+        objectPlaceManager.RemoveObjectAt(selectedObjectIndex);
     }
 
     public void UpdateState(Vector3Int gridPosition)
@@ -48,5 +43,6 @@ public class RemoveState : IBuildingState
     public void EndState()
     {
         previewSystem.StopShowPreview();
+        inGameUI.OnExitObject();
     }
 }

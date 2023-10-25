@@ -40,7 +40,7 @@ public class SelectState : IBuildingState
 
         selectedObjectGridPosition = placement.GetComponent<Building>().GridPosition;
         selectedObjectIndex = placement.GetComponent<Building>().PlacedObjectIndex;
-}
+    }
 
     public int GetStateType()
     {

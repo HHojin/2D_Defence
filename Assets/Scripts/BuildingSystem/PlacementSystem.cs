@@ -1,8 +1,13 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlacementSystem : Singleton<PlacementSystem>
 {
     private PlacedObjectData placedObjectData;
+
+    private Vector3 lastDetectedPosition = Vector3.zero;
+
+    private IBuildingState buildingState;
 
     [SerializeField] private Grid grid;
 
@@ -13,15 +18,16 @@ public class PlacementSystem : Singleton<PlacementSystem>
     [SerializeField] private ObjectPlaceManager objectPlaceManager;
     [SerializeField] private InGameUI inGameUI;
 
-    private Vector3 lastDetectedPosition = Vector3.zero;
+    private GameObject selectedObject;
 
-    private IBuildingState buildingState;
+
 
     protected override void Awake()
     {
         StopPlacement();
 
         placedObjectData = new();
+        selectedObject = null;
     }
 
     //BuildingUI -> UI button
@@ -46,6 +52,7 @@ public class PlacementSystem : Singleton<PlacementSystem>
     public void StartSelect(GameObject placement)
     {
         StopPlacement();
+        selectedObject = placement;
         buildingState = new SelectState(placement,
                                         grid,
                                         preview,
@@ -58,19 +65,18 @@ public class PlacementSystem : Singleton<PlacementSystem>
         inputManager.OnExit += StopPlacement;
     }
     
-
+    /*
     public void StartRemove(GameObject placement)
     {
         StopPlacement();
         buildingState = new RemoveState(placement,
-                                        grid,
-                                        preview,
                                         placedObjectData,
                                         objectPlaceManager);
 
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
+    */
 
     private void PlaceStructure()
     {
@@ -97,6 +103,23 @@ public class PlacementSystem : Singleton<PlacementSystem>
         lastDetectedPosition = Vector3Int.zero;
 
         buildingState = null;
+        selectedObject = null;
+    }
+
+    public void DestroyPlacement()
+    {
+        if (buildingState == null)
+            return;
+
+        buildingState = new RemoveState(selectedObject,
+                                        preview,
+                                        placedObjectData,
+                                        objectPlaceManager,
+                                        inGameUI);
+
+        buildingState.OnAction(selectedObject.GetComponent<Building>().GridPosition);
+
+        StopPlacement();
     }
 
     private void Update()
