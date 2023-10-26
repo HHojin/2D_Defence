@@ -28,6 +28,9 @@ public class SelectState : IBuildingState
         this.inGameUI = inGameUI;
 
         selectedObjectID = placement.GetComponent<Building>().data.ID;
+        previewSystem.StartShowSelectedPlacement(database.objectsData[selectedObjectID].Size,
+                                                 new Vector3(placement.GetComponent<Building>().GridPosition.x + 0.5f,
+                                                             placement.GetComponent<Building>().GridPosition.y + 0.5f));
         inGameUI.OnClickObject();
 
         if (selectedObjectID >= 8)
@@ -90,6 +93,7 @@ public class SelectState : IBuildingState
 
     public void EndState()
     {
+        previewSystem.StopShowSelectedPlacement();
         previewSystem.StopShowPreview();
         inGameUI.OnExitObject();
     }

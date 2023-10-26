@@ -42,6 +42,7 @@ public class RemoveState : IBuildingState
 
     public void EndState()
     {
+        previewSystem.StopShowSelectedPlacement();
         previewSystem.StopShowPreview();
         inGameUI.OnExitObject();
     }

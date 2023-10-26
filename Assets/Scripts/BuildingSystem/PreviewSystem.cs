@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
 
 public class PreviewSystem : MonoBehaviour
 {
     [SerializeField] private GameObject cellIndicator;
+    [SerializeField] private GameObject placementIndicator;
     private GameObject previewObject;
 
     private Color previewColor;
@@ -17,20 +17,27 @@ public class PreviewSystem : MonoBehaviour
     {
         previewObject = Instantiate(prefab);
         PreparePreview(previewObject);
-        PrepareCursor(size);
+        PrepareCursor(cellIndicator, size);
         cellIndicator.SetActive(true);
     }
 
     public void StartShowRemovePreview()
     {
-        PrepareCursor(Vector2Int.one);
+        PrepareCursor(cellIndicator, Vector2Int.one);
     }
 
-    private void PrepareCursor(Vector2Int size)
+    public void StartShowSelectedPlacement(Vector2Int size, Vector3 position)
+    {
+        PrepareCursor(placementIndicator, size);
+        placementIndicator.transform.position = position;
+        placementIndicator.SetActive(true);
+    }
+
+    private void PrepareCursor(GameObject indicator, Vector2Int size)
     {
         if (size.x > 0 || size.y > 0)
         {
-            cellIndicator.transform.localScale = new Vector3(size.x, size.y, 1);
+            indicator.transform.localScale = new Vector3(size.x, size.y, 1);
         }
     }
 
@@ -45,6 +52,11 @@ public class PreviewSystem : MonoBehaviour
     {
         cellIndicator.SetActive(false);
         Destroy(previewObject);
+    }
+
+    public void StopShowSelectedPlacement()
+    {
+        placementIndicator.SetActive(false);
     }
 
     public void UpdatePosition(Vector3 position, bool validity)

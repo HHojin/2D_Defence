@@ -20,8 +20,6 @@ public class PlacementSystem : Singleton<PlacementSystem>
 
     private GameObject selectedObject;
 
-
-
     protected override void Awake()
     {
         StopPlacement();
@@ -64,19 +62,23 @@ public class PlacementSystem : Singleton<PlacementSystem>
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
-    
-    /*
-    public void StartRemove(GameObject placement)
-    {
-        StopPlacement();
-        buildingState = new RemoveState(placement,
-                                        placedObjectData,
-                                        objectPlaceManager);
 
-        inputManager.OnClicked += PlaceStructure;
-        inputManager.OnExit += StopPlacement;
+    //GameScene -> click on Destroy button
+    public void DestroyPlacement()
+    {
+        if (buildingState == null)
+            return;
+
+        buildingState = new RemoveState(selectedObject,
+                                        preview,
+                                        placedObjectData,
+                                        objectPlaceManager,
+                                        inGameUI);
+
+        buildingState.OnAction(selectedObject.GetComponent<Building>().GridPosition);
+
+        StopPlacement();
     }
-    */
 
     private void PlaceStructure()
     {
@@ -104,22 +106,6 @@ public class PlacementSystem : Singleton<PlacementSystem>
 
         buildingState = null;
         selectedObject = null;
-    }
-
-    public void DestroyPlacement()
-    {
-        if (buildingState == null)
-            return;
-
-        buildingState = new RemoveState(selectedObject,
-                                        preview,
-                                        placedObjectData,
-                                        objectPlaceManager,
-                                        inGameUI);
-
-        buildingState.OnAction(selectedObject.GetComponent<Building>().GridPosition);
-
-        StopPlacement();
     }
 
     private void Update()
