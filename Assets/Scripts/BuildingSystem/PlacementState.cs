@@ -48,7 +48,8 @@ public class PlacementState : IBuildingState
         int index = objectPlaceManager.PlaceObject(database.objectsData[selectedObjectID],
                                                    gridPosition,
                                                    new Vector3(grid.CellToWorld(gridPosition).x + 0.5f,
-                                                               grid.CellToWorld(gridPosition).y + 0.5f));
+                                                               grid.CellToWorld(gridPosition).y + 0.5f,
+                                                               -1f));
 
         PlacedObjectData selectedData = placedObjectData;
         selectedData.AddObject(gridPosition,

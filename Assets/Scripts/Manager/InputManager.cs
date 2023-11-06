@@ -4,10 +4,6 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    /*
-    public GameObject buildingUI;
-    public GameObject objectUI;
-    */
     public event Action OnClicked, OnExit;
 
     private void Update()
@@ -19,6 +15,7 @@ public class InputManager : MonoBehaviour
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 clickPos = new Vector2(worldPos.x, worldPos.y);
                 Collider2D clickColl = Physics2D.OverlapPoint(clickPos);
+                Debug.Log(clickColl);
 
                 if (clickColl != null && clickColl.CompareTag("Building"))
                 {
@@ -31,10 +28,6 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            /*
-            buildingUI.SetActive(true);
-            objectUI.SetActive(false);
-            */
             OnExit?.Invoke();
         }
     }
@@ -50,7 +43,6 @@ public class InputManager : MonoBehaviour
             && mouseWorldPos.x < TileManager.Instance.grid.GetWidth()
             && mouseWorldPos.y < TileManager.Instance.grid.GetHeight())
         {
-            //return new Vector2(mouseWorldPos.x + 0.5f, mouseWorldPos.y + 0.5f);
             return mouseWorldPos;
         }
         else

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 //public class GridXY<GridObject>
@@ -25,6 +24,7 @@ public class GridXY
         //gridArray = new GridObject[width, height];
         gridArray = new int[width, height];
         cellArray = new Cell[width, height, cellHeight];
+        placedObjectData = new();
 
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
@@ -80,6 +80,8 @@ public class GridXY
     public ref int[,] GetGridArrayRef() => ref gridArray;
 
     public ref Cell[,,] GetCellArrayRef() => ref cellArray;
+
+    public ref PlacedObjectData GetPlacedObjectDataRef() => ref placedObjectData;
 
     public void UpdateNeighbors()
     {

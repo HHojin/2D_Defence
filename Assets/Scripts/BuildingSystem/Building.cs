@@ -8,6 +8,7 @@ public class Building : MonoBehaviour
 
     public void OnClick()
     {
+        Debug.Log($"name = {name}");
         PlacementSystem.Instance.StartSelect(gameObject);
     }
 }

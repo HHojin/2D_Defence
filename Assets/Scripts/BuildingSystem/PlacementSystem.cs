@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlacementSystem : Singleton<PlacementSystem>
@@ -23,8 +22,11 @@ public class PlacementSystem : Singleton<PlacementSystem>
     protected override void Awake()
     {
         StopPlacement();
+    }
 
-        placedObjectData = new();
+    private void Start()
+    {
+        placedObjectData = TileManager.Instance.grid.GetPlacedObjectDataRef();
         selectedObject = null;
     }
 

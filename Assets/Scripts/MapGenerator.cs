@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-using System;
 using System.Linq;
 using UnityEngine.Events;
 
