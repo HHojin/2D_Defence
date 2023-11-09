@@ -30,7 +30,7 @@ public class InGameUI : MonoBehaviour
             int idx = 0;
 
             var gridPos = TileManager.Instance.map.WorldToCell(mouseWorldPos);
-            var gridValue = TileManager.Instance.grid.GetGridArray(gridPos.x, gridPos.y);
+            var gridValue = TileManager.Instance.grid.GetTerrainHeightArray(gridPos.x, gridPos.y);
 
             for (; idx <= gridValue; idx++)
             {
@@ -38,7 +38,7 @@ public class InGameUI : MonoBehaviour
             }
 
             var cellPos = TileManager.Instance.water.WorldToCell(mouseWorldPos);
-            var cellValue = TileManager.Instance.grid.GetCellArray(cellPos.x, cellPos.y) + 1;
+            var cellValue = TileManager.Instance.grid.GetWaterArray(cellPos.x, cellPos.y) + 1;
             if(cellValue > 1)
                 for (; idx <= cellValue; idx++)
                 {

@@ -47,7 +47,7 @@ public class PlacedObjectData
     public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize)
     {
         List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
-        int gridCenterHeight = TileManager.Instance.grid.GetGridArray(gridPosition.x, gridPosition.y);
+        int gridCenterHeight = TileManager.Instance.grid.GetTerrainHeightArray(gridPosition.x, gridPosition.y);
 
         foreach (var pos in positionToOccupy)
         {
@@ -56,7 +56,7 @@ public class PlacedObjectData
             if (pos.x >= 0 && pos.y >= 0 &&
                pos.x < TileManager.Instance.grid.GetWidth() &&
                pos.y < TileManager.Instance.grid.GetHeight())
-                tmpHeight = TileManager.Instance.grid.GetGridArray(pos.x, pos.y);
+                tmpHeight = TileManager.Instance.grid.GetTerrainHeightArray(pos.x, pos.y);
 
 
             if (placedObjects.ContainsKey(pos) ||

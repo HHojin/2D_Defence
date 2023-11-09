@@ -16,11 +16,11 @@ public class WaterGenerator : MonoBehaviour
     private void OnEnable()
     {
         waterSimulation = new WaterSimulation();
-        waterSimulation.Init(TileManager.Instance.grid.GetCellArrayRef());
+        waterSimulation.Init(TileManager.Instance.grid.GetWaterArrayRef());
 
         length = TileManager.Instance.grid.GetWidth();
         width = TileManager.Instance.grid.GetHeight();
-        height = TileManager.Instance.grid.GetCellHeight();
+        height = TileManager.Instance.grid.GetWaterArray();
         Debug.Log($"{length}, {width}, {height}");
 
         GameManager.Instance.mapGenerated.AddListener(StopCoroutine);
@@ -43,7 +43,7 @@ public class WaterGenerator : MonoBehaviour
     {
         while (true)
         {
-            waterSimulation.Simulate(ref TileManager.Instance.grid.GetCellArrayRef());
+            waterSimulation.Simulate(ref TileManager.Instance.grid.GetWaterArrayRef());
             yield return YieldInStructionCache.WaitForSeconds(5.0f);
             //yield return new WaitForSeconds(1.0f);
         }
@@ -62,7 +62,7 @@ public class WaterGenerator : MonoBehaviour
 
                     for (int z = height - 1; z >= 0; z--)
                     {
-                        if (TileManager.Instance.grid.cellArray[x, y, z].Liquid > 0.01f)
+                        if (TileManager.Instance.grid.waterArray[x, y, z].Liquid > 0.01f)
                         {
                             waterHeight = z;
                             break;
@@ -82,7 +82,7 @@ public class WaterGenerator : MonoBehaviour
     {
         while (true)
         {
-            TileManager.Instance.grid.cellArray[0, 0, TileManager.Instance.grid.GetGridArray(0, 0)].AddWater(1.0f);
+            TileManager.Instance.grid.waterArray[0, 0, TileManager.Instance.grid.GetTerrainHeightArray(0, 0)].AddWater(1.0f);
             yield return YieldInStructionCache.WaitForSeconds(10.0f);
             //yield return new WaitForSeconds(2.0f);
         }
@@ -91,7 +91,7 @@ public class WaterGenerator : MonoBehaviour
     /*
     private void Update()
     {
-        //waterSimulation.Simulate(ref TileManager.Instance.grid.GetCellArrayRef());
+        //waterSimulation.Simulate(ref TileManager.Instance.grid.GetWaterArrayRef());
         //DrawTile();
     }
 
@@ -107,7 +107,7 @@ public class WaterGenerator : MonoBehaviour
 
                 for (int z = height - 1; z >= 0; z--)
                 {
-                    if (TileManager.Instance.grid.cellArray[x, y, z].Liquid > 0.005f)
+                    if (TileManager.Instance.grid.waterArray[x, y, z].Liquid > 0.005f)
                     {
                         waterHeight = z;
                         break;

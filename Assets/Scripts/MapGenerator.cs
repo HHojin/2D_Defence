@@ -34,7 +34,7 @@ public class MapGenerator : MonoBehaviour
 
         gridWidth = TileManager.Instance.grid.GetWidth();
         gridHeight = TileManager.Instance.grid.GetHeight();
-        cellHeight = TileManager.Instance.grid.GetCellHeight();
+        cellHeight = TileManager.Instance.grid.GetWaterArray();
 
         for (int x = 0; x < gridWidth; x++)
         {
@@ -44,15 +44,15 @@ public class MapGenerator : MonoBehaviour
 
                 for (int z = cellHeight - 1; z >= tileId; z--)
                 {
-                    TileManager.Instance.grid.SetCellArray(x, y, z, CellType.Blank);
+                    TileManager.Instance.grid.SetWaterArray(x, y, z, CellType.Blank);
                 }
 
                 for (int z = tileId - 1; z >= 0; z--)
                 {
-                    TileManager.Instance.grid.SetCellArray(x, y, z, CellType.Solid);
+                    TileManager.Instance.grid.SetWaterArray(x, y, z, CellType.Solid);
                 }
 
-                TileManager.Instance.grid.SetGridArray(x, y, tileId);
+                TileManager.Instance.grid.SetTerrainHeightArray(x, y, tileId);
                 TileManager.Instance.DrawTile(x, y, 0, tileId);
             }
         }
